@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 interface TransferEstabDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
-  currentEstab: string
+  currentEstab: { title: string; rank: string; posnId: string }
   onTransfer: (transferData: TransferData) => void
 }
 
@@ -23,12 +23,23 @@ export interface TransferData {
   remarks: string
 }
 
-const availableEstabs = ["OC 'A' Coy", "OC 'B' Coy", "OC 'C' Coy", "OC 'D' Coy", "Delta 1", "Delta 2"]
+const availableEstabs = [
+  { title: "CEO xxx", rank: "ME6", posnId: "CEO002" },
+  { title: "COO xxx", rank: "ME6", posnId: "COO002" },
+  { title: "Delta 1A", rank: "ME4", posnId: "ENG556" },
+  { title: "Delta 1B", rank: "ME4", posnId: "ENG557" },
+  { title: "OC xxx", rank: "ME4", posnId: "ENG558" },
+  // ... add more estabs as needed
+]
 
 export function TransferEstabDialog({ open, onOpenChange, currentEstab, onTransfer }: TransferEstabDialogProps) {
   const [selectedEstab, setSelectedEstab] = useState<string>("")
   const [approvedBy, setApprovedBy] = useState("")
   const [remarks, setRemarks] = useState("")
+
+  const eligibleEstabs = availableEstabs.filter(
+    (estab) => estab.rank === currentEstab.rank && estab.title !== currentEstab.title,
+  )
 
   const handleConfirm = () => {
     if (selectedEstab && approvedBy) {
@@ -37,7 +48,7 @@ export function TransferEstabDialog({ open, onOpenChange, currentEstab, onTransf
 
       const transferData: TransferData = {
         date: formattedDate,
-        previously: currentEstab, // This will be overridden by EstabContext
+        previously: currentEstab.title, // This will be overridden by EstabContext
         transferredTo: selectedEstab,
         approvedBy,
         remarks,
@@ -57,7 +68,7 @@ export function TransferEstabDialog({ open, onOpenChange, currentEstab, onTransf
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Transfer {currentEstab} to:</DialogTitle>
+          <DialogTitle>Transfer {currentEstab.title} to:</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col gap-4">
           <div className="space-y-2">
@@ -67,9 +78,9 @@ export function TransferEstabDialog({ open, onOpenChange, currentEstab, onTransf
                 <SelectValue placeholder="----Select----" />
               </SelectTrigger>
               <SelectContent>
-                {availableEstabs.map((estab) => (
-                  <SelectItem key={estab} value={estab}>
-                    {estab}
+                {eligibleEstabs.map((estab) => (
+                  <SelectItem key={estab.posnId} value={estab.title}>
+                    {estab.title}
                   </SelectItem>
                 ))}
               </SelectContent>

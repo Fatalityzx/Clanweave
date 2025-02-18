@@ -9,46 +9,270 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Checkbox } from "@/components/ui/checkbox"
 import { FileText, Plus } from "lucide-react"
 import Link from "next/link"
-import { useImportedData } from "@/contexts/ImportedDataContext"
 import { CreateEstabDialog } from "@/components/create-estab-dialog"
 
-// Default positions to include in master list
+// Static master estab data
 const defaultPositions = [
   {
-    id: "default-1",
+    id: "1",
     title: "CEO",
     posnId: "CEO001",
     estabRank: "ME6",
     creationDate: "01/01/2020",
     remarks: "Executive position",
-    unit: "HQ xxxx",
+    personnel: "John Doe",
   },
   {
-    id: "default-2",
+    id: "2",
     title: "COO",
     posnId: "COO001",
-    estabRank: "ME6",
-    creationDate: "01/01/2020",
-    remarks: "Operations leadership",
-    unit: "HQ xxxx",
-  },
-  {
-    id: "default-3",
-    title: "Head of Engineering",
-    posnId: "ENG001",
     estabRank: "ME5",
     creationDate: "01/01/2020",
-    remarks: "Engineering leadership",
-    unit: "HQ xxxx",
+    remarks: "Operations leadership",
+    personnel: "Jane Smith",
   },
   {
-    id: "default-4",
-    title: "Senior Engineer",
-    posnId: "ENG002",
-    estabRank: "ME4",
+    id: "3",
+    title: "CTO",
+    posnId: "CTO001",
+    estabRank: "ME5",
     creationDate: "01/01/2020",
     remarks: "Technical leadership",
-    unit: "HQ xxxx",
+    personnel: "Bob Johnson",
+  },
+  {
+    id: "4",
+    title: "Head of HR",
+    posnId: "HR001",
+    estabRank: "ME4",
+    creationDate: "01/01/2020",
+    remarks: "HR leadership",
+    personnel: "Alice Brown",
+  },
+  {
+    id: "5",
+    title: "Head of Finance",
+    posnId: "FIN001",
+    estabRank: "ME4",
+    creationDate: "01/01/2020",
+    remarks: "Finance leadership",
+    personnel: "Charlie Davis",
+  },
+  {
+    id: "6",
+    title: "HR Specialist",
+    posnId: "HR002",
+    estabRank: "ME2",
+    creationDate: "01/01/2021",
+    remarks: "HR operations",
+    personnel: "Grace Lee",
+  },
+  {
+    id: "7",
+    title: "Financial Analyst",
+    posnId: "FIN002",
+    estabRank: "ME2",
+    creationDate: "01/01/2021",
+    remarks: "Financial analysis",
+    personnel: "Henry Wang",
+  },
+  {
+    id: "8",
+    title: "Software Engineer",
+    posnId: "ENG003",
+    estabRank: "ME2",
+    creationDate: "01/01/2021",
+    remarks: "Software development",
+    personnel: "Ivy Chen",
+  },
+  {
+    id: "9",
+    title: "Hd",
+    posnId: "ENG555",
+    estabRank: "ME6",
+    creationDate: "01/01/2022",
+    remarks: "Standard position",
+    personnel: "Harry",
+  },
+  {
+    id: "10",
+    title: "Delta 1A",
+    posnId: "ENG556",
+    estabRank: "ME4",
+    creationDate: "01/01/2022",
+    remarks: "Standard position",
+    personnel: "Wane",
+  },
+  {
+    id: "11",
+    title: "Delta 1B",
+    posnId: "ENG557",
+    estabRank: "ME4",
+    creationDate: "01/01/2022",
+    remarks: "Standard position",
+    personnel: "Rooney",
+  },
+  {
+    id: "12",
+    title: "OC xxx",
+    posnId: "ENG558",
+    estabRank: "ME4",
+    creationDate: "01/01/2022",
+    remarks: "Standard position",
+    personnel: "Jerry",
+  },
+  {
+    id: "13",
+    title: "SM",
+    posnId: "ENG560",
+    estabRank: "ME3",
+    creationDate: "01/01/2022",
+    remarks: "Standard position",
+    personnel: "Watsons",
+  },
+  {
+    id: "14",
+    title: "PC '1B' Coy",
+    posnId: "ENG559",
+    estabRank: "ME2",
+    creationDate: "01/01/2022",
+    remarks: "Standard position",
+    personnel: "Tommy",
+  },
+  {
+    id: "15",
+    title: "PC 'xxx' Coy",
+    posnId: "ENG560",
+    estabRank: "ME2",
+    creationDate: "01/01/2022",
+    remarks: "Standard position",
+    personnel: "Hans",
+  },
+  {
+    id: "16",
+    title: "Deputy COO",
+    posnId: "COO002",
+    estabRank: "ME4",
+    creationDate: "01/02/2023",
+    remarks: "Operations management",
+    personnel: "Vacant",
+  },
+  {
+    id: "17",
+    title: "Senior HR Specialist",
+    posnId: "HR003",
+    estabRank: "ME3",
+    creationDate: "01/03/2023",
+    remarks: "Senior HR role",
+    personnel: "Vacant",
+  },
+  {
+    id: "18",
+    title: "Project Manager",
+    posnId: "ENG004",
+    estabRank: "ME3",
+    creationDate: "01/04/2023",
+    remarks: "Project management",
+    personnel: "Vacant",
+  },
+  {
+    id: "19",
+    title: "Systems Analyst",
+    posnId: "ENG005",
+    estabRank: "ME2",
+    creationDate: "01/05/2023",
+    remarks: "Systems analysis",
+    personnel: "Vacant",
+  },
+  {
+    id: "20",
+    title: "Financial Controller",
+    posnId: "FIN003",
+    estabRank: "ME4",
+    creationDate: "01/06/2023",
+    remarks: "Financial control",
+    personnel: "Vacant",
+  },
+  {
+    id: "21",
+    title: "Software Developer",
+    posnId: "ENG006",
+    estabRank: "ME2",
+    creationDate: "01/07/2023",
+    remarks: "Software development",
+    personnel: "Vacant",
+  },
+  {
+    id: "22",
+    title: "Deputy CTO",
+    posnId: "CTO002",
+    estabRank: "ME4",
+    creationDate: "01/08/2023",
+    remarks: "Technical management",
+    personnel: "Vacant",
+  },
+  {
+    id: "23",
+    title: "Head of Cybersecurity",
+    posnId: "CTO003",
+    estabRank: "ME4",
+    creationDate: "15/08/2023",
+    remarks: "Cybersecurity leadership",
+    personnel: "Vacant",
+  },
+  {
+    id: "24",
+    title: "Senior Data Analyst",
+    posnId: "ENG007",
+    estabRank: "ME3",
+    creationDate: "01/09/2023",
+    remarks: "Data analysis",
+    personnel: "Vacant",
+  },
+  {
+    id: "25",
+    title: "Operations Manager",
+    posnId: "COO003",
+    estabRank: "ME3",
+    creationDate: "15/09/2023",
+    remarks: "Operations management",
+    personnel: "Vacant",
+  },
+  {
+    id: "26",
+    title: "IT Support Specialist",
+    posnId: "ENG008",
+    estabRank: "ME2",
+    creationDate: "01/10/2023",
+    remarks: "IT support",
+    personnel: "Vacant",
+  },
+  {
+    id: "27",
+    title: "Junior Accountant",
+    posnId: "FIN004",
+    estabRank: "ME1",
+    creationDate: "15/10/2023",
+    remarks: "Entry level accounting",
+    personnel: "Vacant",
+  },
+  {
+    id: "28",
+    title: "Network Engineer",
+    posnId: "ENG009",
+    estabRank: "ME2",
+    creationDate: "01/11/2023",
+    remarks: "Network infrastructure",
+    personnel: "Vacant",
+  },
+  {
+    id: "29",
+    title: "Business Analyst",
+    posnId: "BUS001",
+    estabRank: "ME3",
+    creationDate: "15/11/2023",
+    remarks: "Business analysis",
+    personnel: "Vacant",
   },
 ]
 
@@ -56,31 +280,8 @@ export default function MasterEstabList() {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedRows, setSelectedRows] = useState<string[]>([])
   const [showCreateDialog, setShowCreateDialog] = useState(false)
-  const { importedData } = useImportedData()
 
-  // Combine imported positions with default positions
-  const allPositions = [
-    ...defaultPositions,
-    ...(importedData?.positions
-      .filter((p) => p.Unit === "HQ xxxx")
-      .map((p) => ({
-        id: p.ID.toString(),
-        title: p.Position,
-        posnId: p["POSN ID"],
-        estabRank: p.Rank,
-        creationDate: p["Creation Date"],
-        remarks: p.Remarks || "Standard position",
-        unit: p.Unit,
-        name: p.Name,
-      })) || []),
-  ]
-
-  // Remove duplicates based on title
-  const uniquePositions = allPositions.filter(
-    (position, index, self) => index === self.findIndex((p) => p.title === position.title),
-  )
-
-  const filteredPositions = uniquePositions.filter((position) =>
+  const filteredPositions = defaultPositions.filter((position) =>
     Object.values(position).some(
       (value) => typeof value === "string" && value.toLowerCase().includes(searchQuery.toLowerCase()),
     ),
@@ -156,11 +357,11 @@ export default function MasterEstabList() {
                     <TableCell>{position.posnId}</TableCell>
                     <TableCell>{position.estabRank}</TableCell>
                     <TableCell>{position.creationDate}</TableCell>
-                    <TableCell>{position.name || "Vacant"}</TableCell>
+                    <TableCell>{position.personnel}</TableCell>
                     <TableCell>{position.remarks}</TableCell>
                     <TableCell>
                       <div className="flex justify-center">
-                        <Link href={`/organization/estab/${position.id}`}>
+                        <Link href={`/estab/master-list/${position.id}`}>
                           <Button variant="ghost" size="icon" className="h-8 w-8">
                             <FileText className="h-4 w-4" />
                           </Button>

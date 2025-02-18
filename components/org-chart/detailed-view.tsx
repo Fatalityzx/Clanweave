@@ -95,6 +95,10 @@ export function DetailedView({ onBack }: DetailedViewProps) {
     />
   )
 
+  const handleEditEstab = (id: string) => {
+    router.push(`/estab/master-list/${id}`)
+  }
+
   return (
     <div className="relative min-h-screen bg-[rgba(233,213,255,0.3)]" onClick={() => setSelectedNode(null)}>
       <div className="p-8">
@@ -285,7 +289,10 @@ export function DetailedView({ onBack }: DetailedViewProps) {
             <Button
               variant="ghost"
               className="w-full justify-start text-sm hover:bg-gray-50 text-gray-700"
-              onClick={() => setSelectedNode(null)}
+              onClick={() => {
+                handleEditEstab(selectedNode.id)
+                setSelectedNode(null)
+              }}
             >
               <Edit className="h-4 w-4 mr-2" />
               Estab Edit
