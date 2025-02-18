@@ -1,5 +1,7 @@
 "use client"
 
+import type React from "react"
+
 import { useState } from "react"
 import { Template } from "@/components/layout/template"
 import { Bell, Upload, FileText, Database, ChevronRight } from "lucide-react"

@@ -16,8 +16,15 @@ interface RequirementSection {
   vocationalReq: string
   studyReq: string
   remarks?: string
+  id?: string
+  position?: string
+  criteria?: string
+  priority?: string
+  readyDate?: string
+  unit?: string
 }
 
+// Updated requirements data with additional positions
 const defaultRequirementSections: RequirementSection[] = [
   {
     title: "CEO",
@@ -34,11 +41,58 @@ const defaultRequirementSections: RequirementSection[] = [
     remarks: "Strong operational and strategic planning skills required",
   },
   {
-    title: "CTO",
-    minRank: "ME6 or Equivalent",
+    title: "Delta 1A",
+    minRank: "ME4 or Equivalent",
     vocationalReq: "ME",
-    studyReq: "Masters/PhD in Computer Science or Engineering",
-    remarks: "Proven track record in technology leadership",
+    studyReq: "Bachelors/Masters in Engineering or related field",
+    remarks: "Experience in team leadership and project management",
+    criteria: "5+ years experience in engineering management",
+    priority: "High",
+  },
+  {
+    title: "Delta 1B",
+    minRank: "ME4 or Equivalent",
+    vocationalReq: "ME",
+    studyReq: "Bachelors/Masters in Engineering or related field",
+    remarks: "Strong technical background with leadership capabilities",
+    criteria: "5+ years experience in technical operations",
+    priority: "High",
+  },
+  {
+    title: "SM",
+    minRank: "ME3 or Equivalent",
+    vocationalReq: "ME",
+    studyReq: "Bachelors in Engineering or related technical field",
+    remarks: "Experience in technical supervision and team coordination",
+    criteria: "3+ years experience in technical operations",
+    priority: "Medium",
+  },
+  {
+    title: "OC xxx",
+    minRank: "ME4 or Equivalent",
+    vocationalReq: "ME",
+    studyReq: "Bachelors/Masters in Engineering or Operations Management",
+    remarks: "Strong leadership and operational management skills",
+    criteria: "5+ years experience in operations management",
+    priority: "High",
+  },
+  {
+    title: "PC '1B' Coy",
+    minRank: "ME2 or Equivalent",
+    vocationalReq: "ME",
+    studyReq: "Bachelors in Engineering or related field",
+    remarks: "Experience in team supervision and project execution",
+    criteria: "2+ years experience in technical operations",
+    priority: "Medium",
+  },
+  {
+    title: "PC 'xxx' Coy",
+    minRank: "ME2 or Equivalent",
+    vocationalReq: "ME",
+    studyReq: "Bachelors in Engineering or related field",
+    remarks: "Experience in team leadership and technical operations",
+    criteria: "2+ years experience in technical operations",
+    priority: "Medium",
   },
   {
     title: "Head of HR",
@@ -133,10 +187,45 @@ export default function EstabRequirementsPage() {
   const { importedData } = useImportedData()
   const id = params.id as string
 
-  const position = importedData?.positions.find((p) => p.ID.toString() === id)
+  // Get all HQ xxxx positions
+  const hqPositions = importedData?.positions.filter((p) => p.Unit === "HQ xxxx") || []
 
-  const filteredSections = defaultRequirementSections.filter((section) =>
-    Object.values(section).some((value) => value.toLowerCase().includes(searchQuery.toLowerCase())),
+  // Convert positions to requirement sections
+  const importedRequirementSections: RequirementSection[] = hqPositions.map((p) => ({
+    id: p.ID.toString(),
+    title: p.Position,
+    position: p.Position,
+    minRank: p.Rank,
+    vocationalReq: "ME", // Default vocational requirement
+    studyReq:
+      p.Criteria ||
+      defaultRequirementSections.find((r) => r.title === p.Position)?.studyReq ||
+      "Bachelors in relevant field",
+    remarks:
+      p.Remarks ||
+      defaultRequirementSections.find((r) => r.title === p.Position)?.remarks ||
+      "Experience in relevant field required",
+    criteria:
+      p.Criteria ||
+      defaultRequirementSections.find((r) => r.title === p.Position)?.criteria ||
+      "Technical expertise in relevant domain",
+    priority: p.Priority || defaultRequirementSections.find((r) => r.title === p.Position)?.priority || "Medium",
+    readyDate: p["Estab Ready Date"],
+    unit: p.Unit,
+  }))
+
+  // Combine default and imported requirement sections
+  const combinedRequirementSections = [...defaultRequirementSections, ...importedRequirementSections]
+
+  // Remove duplicates based on title
+  const uniqueRequirementSections = combinedRequirementSections.filter(
+    (section, index, self) => index === self.findIndex((t) => t.title === section.title),
+  )
+
+  const filteredSections = uniqueRequirementSections.filter((section) =>
+    Object.values(section).some(
+      (value) => typeof value === "string" && value.toLowerCase().includes(searchQuery.toLowerCase()),
+    ),
   )
 
   return (
@@ -165,7 +254,7 @@ export default function EstabRequirementsPage() {
             <div className="flex gap-2 max-w-md">
               <Input
                 type="search"
-                placeholder="Search"
+                placeholder="Search requirements"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="flex-1"
@@ -182,6 +271,7 @@ export default function EstabRequirementsPage() {
                     <AccordionTrigger className="bg-[#E5F6FD] hover:bg-[#d5f0fa] px-4 rounded-lg">
                       <div className="flex items-center gap-2">
                         <span className="font-semibold">{section.title}</span>
+                        <span className="text-sm text-gray-500">({section.minRank})</span>
                         <ChevronRight className="h-4 w-4 transition-transform duration-200" />
                       </div>
                     </AccordionTrigger>
@@ -199,7 +289,36 @@ export default function EstabRequirementsPage() {
                           <div className="font-medium">Study requirement:</div>
                           <div>{section.studyReq}</div>
                         </div>
-                        {section.remarks && <div className="text-sm text-gray-500 italic">{section.remarks}</div>}
+                        {section.criteria && (
+                          <div>
+                            <div className="font-medium">Criteria:</div>
+                            <div>{section.criteria}</div>
+                          </div>
+                        )}
+                        {section.priority && (
+                          <div>
+                            <div className="font-medium">Priority:</div>
+                            <div>{section.priority}</div>
+                          </div>
+                        )}
+                        {section.readyDate && (
+                          <div>
+                            <div className="font-medium">Estab Ready Date:</div>
+                            <div>{section.readyDate}</div>
+                          </div>
+                        )}
+                        {section.remarks && (
+                          <div>
+                            <div className="font-medium">Remarks:</div>
+                            <div>{section.remarks}</div>
+                          </div>
+                        )}
+                        {section.unit && (
+                          <div>
+                            <div className="font-medium">Unit:</div>
+                            <div>{section.unit}</div>
+                          </div>
+                        )}
                       </div>
                     </AccordionContent>
                   </AccordionItem>

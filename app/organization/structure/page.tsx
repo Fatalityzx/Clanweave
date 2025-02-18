@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation"
 import { FileText } from "lucide-react"
 
 export default function StructurePage() {
-  const [showDetailed, setShowDetailed] = useState(false)
+  const [showDetailed, setShowDetailed] = useState(true)
   const [selectedNode, setSelectedNode] = useState(null)
   const [selectedPositionId, setSelectedPositionId] = useState("")
   const router = useRouter()

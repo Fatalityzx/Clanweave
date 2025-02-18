@@ -190,7 +190,9 @@ export default function EstabDashboard() {
                     <h2 className="text-xl font-semibold text-gray-800">Available Positions</h2>
                     <AlertCircle className="h-5 w-5 text-yellow-500" />
                   </div>
-                  <Button variant="outline">View List of Estabs</Button>
+                  <Button className="bg-[#0066cc] hover:bg-[#0052a3]" onClick={() => router.push("/estab/master-list")}>
+                    View List of Estabs
+                  </Button>
                 </div>
                 <div className="overflow-x-auto">
                   <Table>
@@ -241,7 +243,12 @@ export default function EstabDashboard() {
                     <Button variant="outline" onClick={() => setShowPriorityRules(true)}>
                       Priority Rules Mgmt
                     </Button>
-                    <Button onClick={() => router.push("/estab/master-list")}>View List of Estabs</Button>
+                    <Button
+                      className="bg-[#0066cc] hover:bg-[#0052a3]"
+                      onClick={() => router.push("/estab/master-list")}
+                    >
+                      View List of Estabs
+                    </Button>
                   </div>
                 </div>
                 <div className="overflow-x-auto">

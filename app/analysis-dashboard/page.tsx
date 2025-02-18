@@ -54,8 +54,8 @@ export default function AnalysisDashboard() {
     return fullData.filter((item) => item.year >= startYear)
   }, [timeRange])
 
-  const totalMETs = filteredData[filteredData.length - 1].count
-  const inService = totalMETs - filteredData[filteredData.length - 1].attrition
+  const totalME1s = filteredData[filteredData.length - 1].count
+  const inService = totalME1s - filteredData[filteredData.length - 1].attrition
   const outOfService = filteredData[filteredData.length - 1].attrition
   const averageAttritionRate = (
     filteredData.reduce((sum, item) => sum + item.attrition, 0) / filteredData.length
@@ -69,27 +69,27 @@ export default function AnalysisDashboard() {
   const predictiveAttritionData = useMemo(() => {
     const lastYear = filteredData[filteredData.length - 1].year
     return [
-      { year: lastYear + 1, count: Math.round(totalMETs * 1.03) },
-      { year: lastYear + 2, count: Math.round(totalMETs * 1.06) },
-      { year: lastYear + 3, count: Math.round(totalMETs * 1.09) },
-      { year: lastYear + 4, count: Math.round(totalMETs * 1.12) },
-      { year: lastYear + 5, count: Math.round(totalMETs * 1.15) },
-      { year: lastYear + 6, count: Math.round(totalMETs * 1.18) },
-      { year: lastYear + 7, count: Math.round(totalMETs * 1.21) },
-      { year: lastYear + 8, count: Math.round(totalMETs * 1.24) },
-      { year: lastYear + 9, count: Math.round(totalMETs * 1.27) },
-      { year: lastYear + 10, count: Math.round(totalMETs * 1.3) },
+      { year: lastYear + 1, count: Math.round(totalME1s * 1.03) },
+      { year: lastYear + 2, count: Math.round(totalME1s * 1.06) },
+      { year: lastYear + 3, count: Math.round(totalME1s * 1.09) },
+      { year: lastYear + 4, count: Math.round(totalME1s * 1.12) },
+      { year: lastYear + 5, count: Math.round(totalME1s * 1.15) },
+      { year: lastYear + 6, count: Math.round(totalME1s * 1.18) },
+      { year: lastYear + 7, count: Math.round(totalME1s * 1.21) },
+      { year: lastYear + 8, count: Math.round(totalME1s * 1.24) },
+      { year: lastYear + 9, count: Math.round(totalME1s * 1.27) },
+      { year: lastYear + 10, count: Math.round(totalME1s * 1.3) },
     ]
-  }, [filteredData, totalMETs])
+  }, [filteredData, totalME1s])
 
   const predictedShortfall = useMemo(() => {
     const lastYear = filteredData[filteredData.length - 1].year
     return [
-      { year: lastYear + 7, shortfall: Math.round(totalMETs * 0.05), supply: Math.round(totalMETs * 1.21) },
-      { year: lastYear + 8, shortfall: Math.round(totalMETs * 0.07), supply: Math.round(totalMETs * 1.24) },
-      { year: lastYear + 9, shortfall: Math.round(totalMETs * 0.09), supply: Math.round(totalMETs * 1.27) },
+      { year: lastYear + 7, shortfall: Math.round(totalME1s * 0.05), supply: Math.round(totalME1s * 1.21) },
+      { year: lastYear + 8, shortfall: Math.round(totalME1s * 0.07), supply: Math.round(totalME1s * 1.24) },
+      { year: lastYear + 9, shortfall: Math.round(totalME1s * 0.09), supply: Math.round(totalME1s * 1.27) },
     ]
-  }, [filteredData, totalMETs])
+  }, [filteredData, totalME1s])
 
   return (
     <div className="flex min-h-screen bg-gray-100">
@@ -117,11 +117,11 @@ export default function AnalysisDashboard() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Total METs</CardTitle>
+                <CardTitle className="text-sm font-medium">Total ME1s</CardTitle>
                 <Users className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{totalMETs}</div>
+                <div className="text-2xl font-bold">{totalME1s}</div>
                 <p className="text-xs text-muted-foreground">
                   {growthRate}% growth over {timeRange} years
                 </p>
@@ -135,7 +135,7 @@ export default function AnalysisDashboard() {
               <CardContent>
                 <div className="text-2xl font-bold">{inService}</div>
                 <p className="text-xs text-muted-foreground">
-                  {((inService / totalMETs) * 100).toFixed(1)}% of total METs
+                  {((inService / totalME1s) * 100).toFixed(1)}% of total ME1s
                 </p>
               </CardContent>
             </Card>
@@ -147,7 +147,7 @@ export default function AnalysisDashboard() {
               <CardContent>
                 <div className="text-2xl font-bold">{outOfService}</div>
                 <p className="text-xs text-muted-foreground">
-                  {((outOfService / totalMETs) * 100).toFixed(1)}% of total METs
+                  {((outOfService / totalME1s) * 100).toFixed(1)}% of total ME1s
                 </p>
               </CardContent>
             </Card>
