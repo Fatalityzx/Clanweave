@@ -365,7 +365,7 @@ export default function MasterEstabList() {
                     <TableCell>{position.remarks}</TableCell>
                     <TableCell>
                       <div className="flex justify-center">
-                        <Link href={`/estab/master-list/${position.id}`}>
+                        <Link href={`/estab/details/${position.id}`} key={position.id}>
                           <Button variant="ghost" size="icon" className="h-8 w-8">
                             <FileText className="h-4 w-4" />
                           </Button>
