@@ -1,30 +1,54 @@
 "use client"
 
-import { Bell, Search, ChevronDown } from "lucide-react"
+import React from "react"
+
+import { Bell, ChevronDown, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import Image from "next/image"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { motion } from "framer-motion"
+import { useGlobalSearch } from "@/contexts/GlobalSearchContext"
+import { useRouter } from "next/navigation"
 
 export function Header() {
+  const { setSearchQuery } = useGlobalSearch()
+  const [localSearchQuery, setLocalSearchQuery] = React.useState("")
+  const router = useRouter()
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (localSearchQuery.trim()) {
+      setSearchQuery(localSearchQuery)
+    }
+  }
+
   return (
-    <header className="border-b">
+    <motion.header
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      className="border-b bg-white"
+    >
       <div className="flex h-16 items-center px-4 gap-4">
         <div className="text-xl font-semibold">CLANWEAVE</div>
 
         {/* Global Search */}
         <div className="flex-1 ml-8">
-          <div className="relative max-w-md">
+          <form onSubmit={handleSearch} className="relative max-w-md">
             <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-500" />
-            <Input placeholder="Search..." className="pl-8 w-full" />
-          </div>
+            <Input
+              placeholder="Search positions, personnel, or units..."
+              className="pl-8 w-full"
+              value={localSearchQuery}
+              onChange={(e) => setLocalSearchQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault()
+                  handleSearch(e)
+                }
+              }}
+            />
+          </form>
         </div>
 
         <div className="flex items-center gap-4">
@@ -39,24 +63,21 @@ export function Header() {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="flex items-center gap-2">
                 <div className="flex items-center gap-2">
-                  <Image src="/placeholder-user.jpg" alt="Admin" width={32} height={32} className="rounded-full" />
+                  <img src="/placeholder-user.jpg" alt="Admin" className="w-8 h-8 rounded-full" />
                   <span>Admin Account</span>
                   <ChevronDown className="h-4 w-4" />
                 </div>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Log out</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">Settings</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer text-red-600">Log out</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
       </div>
-    </header>
+    </motion.header>
   )
 }
 

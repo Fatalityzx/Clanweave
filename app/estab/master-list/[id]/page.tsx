@@ -12,11 +12,11 @@ import Link from "next/link"
 import { CreateEstabDialog } from "@/components/create-estab-dialog"
 import { useParams } from "next/navigation"
 
-// Static master estab data
+// Update the defaultPositions array
 const defaultPositions = [
   {
     id: "1",
-    title: "CEO",
+    title: "Hd xyz", // Changed from CEO
     posnId: "CEO001",
     estabRank: "ME6",
     creationDate: "01/01/2020",
@@ -25,7 +25,7 @@ const defaultPositions = [
   },
   {
     id: "2",
-    title: "COO",
+    title: "Hd 123", // Changed from COO
     posnId: "COO001",
     estabRank: "ME5",
     creationDate: "01/01/2020",
@@ -34,7 +34,7 @@ const defaultPositions = [
   },
   {
     id: "3",
-    title: "CTO",
+    title: "OC 123", // Changed from CTO
     posnId: "CTO001",
     estabRank: "ME5",
     creationDate: "01/01/2020",
@@ -43,7 +43,7 @@ const defaultPositions = [
   },
   {
     id: "4",
-    title: "Head of HR",
+    title: "OC xyz", // Changed from Head of HR
     posnId: "HR001",
     estabRank: "ME4",
     creationDate: "01/01/2020",
@@ -52,7 +52,7 @@ const defaultPositions = [
   },
   {
     id: "5",
-    title: "Head of Finance",
+    title: "OC 456", // Changed from Head of Finance
     posnId: "FIN001",
     estabRank: "ME4",
     creationDate: "01/01/2020",
@@ -61,6 +61,15 @@ const defaultPositions = [
   },
   {
     id: "6",
+    title: "OC ABC", // Changed from Head of Engineering
+    posnId: "ENG001",
+    estabRank: "ME5",
+    creationDate: "01/01/2020",
+    remarks: "Engineering leadership",
+    personnel: "David Wilson",
+  },
+  {
+    id: "7",
     title: "HR Specialist",
     posnId: "HR002",
     estabRank: "ME2",
@@ -69,7 +78,7 @@ const defaultPositions = [
     personnel: "Grace Lee",
   },
   {
-    id: "7",
+    id: "8",
     title: "Financial Analyst",
     posnId: "FIN002",
     estabRank: "ME2",
@@ -78,17 +87,8 @@ const defaultPositions = [
     personnel: "Henry Wang",
   },
   {
-    id: "8",
-    title: "Software Engineer",
-    posnId: "ENG003",
-    estabRank: "ME2",
-    creationDate: "01/01/2021",
-    remarks: "Software development",
-    personnel: "Ivy Chen",
-  },
-  {
     id: "9",
-    title: "Hd",
+    title: "Hd xxxx", // Changed from Hd
     posnId: "ENG555",
     estabRank: "ME6",
     creationDate: "01/01/2022",
@@ -97,7 +97,7 @@ const defaultPositions = [
   },
   {
     id: "10",
-    title: "Delta 1A",
+    title: "OC 1A", // Changed from Delta 1A
     posnId: "ENG556",
     estabRank: "ME4",
     creationDate: "01/01/2022",
@@ -106,7 +106,7 @@ const defaultPositions = [
   },
   {
     id: "11",
-    title: "Delta 1B",
+    title: "OC 1B", // Changed from Delta 1B
     posnId: "ENG557",
     estabRank: "ME4",
     creationDate: "01/01/2022",
@@ -124,7 +124,7 @@ const defaultPositions = [
   },
   {
     id: "13",
-    title: "SM",
+    title: "SM xxxx", // Changed from SM
     posnId: "ENG560",
     estabRank: "ME3",
     creationDate: "01/01/2022",
@@ -151,7 +151,7 @@ const defaultPositions = [
   },
   {
     id: "16",
-    title: "Deputy COO",
+    title: "Dy Hd", // Changed from Deputy COO
     posnId: "COO002",
     estabRank: "ME4",
     creationDate: "01/02/2023",
@@ -205,7 +205,7 @@ const defaultPositions = [
   },
   {
     id: "22",
-    title: "Deputy CTO",
+    title: "Dy OC", // Changed from Deputy CTO
     posnId: "CTO002",
     estabRank: "ME4",
     creationDate: "01/08/2023",
@@ -273,6 +273,15 @@ const defaultPositions = [
     estabRank: "ME3",
     creationDate: "15/11/2023",
     remarks: "Business analysis",
+    personnel: "Vacant",
+  },
+  {
+    id: "30",
+    title: "Test Transfer",
+    posnId: "TEST001",
+    estabRank: "ME5",
+    creationDate: "01/02/2024",
+    remarks: "Testing",
     personnel: "Vacant",
   },
 ]

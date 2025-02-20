@@ -50,19 +50,22 @@ const transferHistory: TransferHistory[] = [
 ]
 
 const estabRequirements: { [key: string]: EstabRequirement } = {
-  SM: {
+  "SM xxxx": {
+    // Changed from SM
     minRank: "ME3",
     criteria: "3+ years experience in technical operations, supervisory skills",
     priority: "Medium",
     remarks: "Key role in coordinating technical teams and operations",
   },
-  "Delta 1A": {
+  "OC 1A": {
+    // Changed from Delta 1A
     minRank: "ME4",
     criteria: "5+ years experience in engineering management, leadership skills",
     priority: "High",
     remarks: "Critical position overseeing major technical operations",
   },
-  "Delta 1B": {
+  "OC 1B": {
+    // Changed from Delta 1B
     minRank: "ME4",
     criteria: "5+ years experience in technical project management",
     priority: "High",
@@ -86,7 +89,8 @@ const estabRequirements: { [key: string]: EstabRequirement } = {
     priority: "Medium",
     remarks: "Oversees specific technical projects and team performance",
   },
-  HD: {
+  "Hd xxxx": {
+    // Changed from HD
     minRank: "ME6",
     criteria: "10+ years experience in senior leadership, strategic vision",
     priority: "Critical",

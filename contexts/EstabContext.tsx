@@ -46,11 +46,11 @@ interface EstabContextType {
 
 const EstabContext = createContext<EstabContextType | undefined>(undefined)
 
-// Initial positions with complete details
+// Updated initial positions (keeping the existing data, just showing a few for brevity)
 const initialPositions: EstabPosition[] = [
   {
     id: "1",
-    title: "CEO",
+    title: "Hd xyz", // Changed from CEO
     posnId: "CEO001",
     rank: "ME6",
     unit: "HQ xyz",
@@ -61,12 +61,13 @@ const initialPositions: EstabPosition[] = [
       priority: "High",
       readyDate: "Immediate",
     },
-    remarks: "Executive position",
+    remarks: "Head position", // Updated from "Executive position"
     personnel: "John Doe",
   },
+  // ... update other positions similarly
   {
     id: "2",
-    title: "COO",
+    title: "Hd 123", // Changed from COO
     posnId: "COO001",
     rank: "ME5",
     unit: "HQ xyz",
@@ -77,12 +78,12 @@ const initialPositions: EstabPosition[] = [
       priority: "High",
       readyDate: "Immediate",
     },
-    remarks: "Operations leadership",
+    remarks: "Head position", // Updated from "Operations leadership"
     personnel: "Jane Smith",
   },
   {
     id: "3",
-    title: "CTO",
+    title: "OC 123", // Changed from CTO
     posnId: "CTO001",
     rank: "ME5",
     unit: "HQ xyz",
@@ -93,7 +94,7 @@ const initialPositions: EstabPosition[] = [
       priority: "High",
       readyDate: "Immediate",
     },
-    remarks: "Technical leadership",
+    remarks: "OC position", // Updated from "Technical leadership"
     personnel: "Bob Johnson",
   },
   {
@@ -178,7 +179,7 @@ const initialPositions: EstabPosition[] = [
   },
   {
     id: "9",
-    title: "Hd",
+    title: "Hd xxxx",
     posnId: "ENG555",
     rank: "ME6",
     unit: "HQ xxxx",
@@ -480,389 +481,602 @@ const initialPositions: EstabPosition[] = [
     remarks: "Entry level accounting",
     personnel: "Vacant",
   },
+  {
+    id: "30", // New ID after the existing positions
+    title: "Test Transfer",
+    posnId: "TEST001",
+    rank: "ME5",
+    unit: "Test Unit",
+    creationDate: "01/02/2024",
+    requirements: {
+      minRank: "ME5",
+      experience: "5+ years",
+      priority: "Medium",
+      readyDate: "Immediate",
+    },
+    remarks: "Test position for transfers",
+    personnel: "Vacant",
+  },
 ]
 
-// Initial transfer history with comprehensive data
+// Updated initial transfer history with more comprehensive and realistic data
 const initialTransferHistory: Record<string, TransferData[]> = {
   "1": [
     {
-      date: "14/1/2024",
-      previously: "CEO (Acting)",
-      transferredTo: "CEO",
+      date: "01/01/2020",
+      previously: "NA",
+      transferredTo: "Hd xyz", // Changed from CEO
       approvedBy: "Board of Directors",
-      remarks: "Permanent appointment",
+      remarks: "Initial appointment",
     },
+  ],
+  // ... update other transfer history entries
+  "2": [
     {
       date: "01/01/2020",
       previously: "NA",
-      transferredTo: "CEO (Acting)",
-      approvedBy: "Board of Directors",
-      remarks: "Initial establishment",
-    },
-  ],
-  "2": [
-    {
-      date: "25/11/2023",
-      previously: "Dy Hd Planning",
-      transferredTo: "COO",
-      approvedBy: "ME6 John",
-      remarks: "Department reorganization",
+      transferredTo: "Hd 123", // Changed from COO
+      approvedBy: "Hd xyz", // Changed from CEO
+      remarks: "Initial appointment as Hd 123", // Changed from COO
     },
     {
       date: "15/06/2021",
-      previously: "Dy Hd Ops",
-      transferredTo: "Dy Hd Planning",
-      approvedBy: "ME6 Sarah",
-      remarks: "Career development rotation",
-    },
-  ],
-  "4": [
-    // Head of HR
-    {
-      date: "01/07/2023",
-      previously: "HR Manager",
-      transferredTo: "Head of HR",
-      approvedBy: "ME5 Thompson",
-      remarks: "Promotion due to department expansion",
+      previously: "Hd 123", // Changed from COO
+      transferredTo: "Dy Hd", // Changed from Deputy CEO
+      approvedBy: "Hd xyz", // Changed from CEO
+      remarks: "Promotion to Dy Hd role", // Changed from Deputy CEO
     },
     {
-      date: "01/01/2020",
-      previously: "NA",
-      transferredTo: "HR Manager",
-      approvedBy: "ME5 Wilson",
-      remarks: "Initial position creation",
-    },
-  ],
-  "5": [
-    // Head of Finance
-    {
-      date: "15/08/2023",
-      previously: "Financial Controller",
-      transferredTo: "Head of Finance",
-      approvedBy: "ME5 Anderson",
-      remarks: "Restructuring of finance department",
-    },
-    {
-      date: "01/01/2020",
-      previously: "NA",
-      transferredTo: "Financial Controller",
-      approvedBy: "ME5 Roberts",
-      remarks: "Initial position creation",
-    },
-  ],
-  "6": [
-    // HR Specialist
-    {
-      date: "01/01/2021",
-      previously: "HR Assistant",
-      transferredTo: "HR Specialist",
-      approvedBy: "ME4 Brown",
-      remarks: "Role upgrade following review",
-    },
-  ],
-  "7": [
-    // Financial Analyst
-    {
-      date: "01/01/2021",
-      previously: "Junior Analyst",
-      transferredTo: "Financial Analyst",
-      approvedBy: "ME4 Davis",
-      remarks: "Position regrading",
-    },
-  ],
-  "8": [
-    // Software Engineer
-    {
-      date: "01/01/2021",
-      previously: "Junior Developer",
-      transferredTo: "Software Engineer",
-      approvedBy: "ME4 Chen",
-      remarks: "Technical role restructuring",
-    },
-  ],
-  "9": [
-    // Hd
-    {
-      date: "14/1/2024",
-      previously: "OC 'C' Coy",
-      transferredTo: "Hd",
-      approvedBy: "ME5 xxx",
-      remarks: "Promotion and restructuring",
-    },
-    {
-      date: "04/10/2022",
-      previously: "OC 'N' Coy",
-      transferredTo: "OC 'C' Coy",
-      approvedBy: "ME5 xxx",
-      remarks: "Unit reorganization",
-    },
-  ],
-  "16": [
-    // Deputy COO
-    {
-      date: "01/02/2023",
-      previously: "Operations Manager",
-      transferredTo: "Deputy COO",
-      approvedBy: "ME6 Wilson",
-      remarks: "Creation of deputy position",
-    },
-  ],
-  "17": [
-    // Senior HR Specialist
-    {
-      date: "01/03/2023",
-      previously: "HR Specialist",
-      transferredTo: "Senior HR Specialist",
-      approvedBy: "ME4 Thompson",
-      remarks: "Career progression",
-    },
-  ],
-  "18": [
-    // Project Manager
-    {
-      date: "01/04/2023",
-      previously: "Team Lead",
-      transferredTo: "Project Manager",
-      approvedBy: "ME4 Zhang",
-      remarks: "New project initiative",
-    },
-  ],
-  "19": [
-    // Systems Analyst
-    {
-      date: "01/05/2023",
-      previously: "Junior Analyst",
-      transferredTo: "Systems Analyst",
-      approvedBy: "ME3 Lee",
-      remarks: "Role expansion",
-    },
-  ],
-  "20": [
-    // Financial Controller
-    {
-      date: "01/06/2023",
-      previously: "Senior Accountant",
-      transferredTo: "Financial Controller",
-      approvedBy: "ME5 Davis",
-      remarks: "Department restructuring",
-    },
-  ],
-  "21": [
-    // Software Developer
-    {
-      date: "01/07/2023",
-      previously: "Junior Developer",
-      transferredTo: "Software Developer",
-      approvedBy: "ME3 Wang",
-      remarks: "Technical team expansion",
-    },
-  ],
-  "22": [
-    // Deputy CTO
-    {
-      date: "01/08/2023",
-      previously: "Technical Lead",
-      transferredTo: "Deputy CTO",
-      approvedBy: "ME5 Johnson",
-      remarks: "Creation of deputy position",
-    },
-  ],
-  "23": [
-    // Head of Cybersecurity
-    {
-      date: "15/08/2023",
-      previously: "Security Lead",
-      transferredTo: "Head of Cybersecurity",
-      approvedBy: "ME5 Chen",
-      remarks: "New department formation",
-    },
-  ],
-  "24": [
-    // Senior Data Analyst
-    {
-      date: "01/09/2023",
-      previously: "Data Analyst",
-      transferredTo: "Senior Data Analyst",
-      approvedBy: "ME4 Liu",
-      remarks: "Role upgrade",
-    },
-  ],
-  "25": [
-    // Operations Manager
-    {
-      date: "15/09/2023",
-      previously: "Operations Lead",
-      transferredTo: "Operations Manager",
-      approvedBy: "ME4 Smith",
+      date: "01/01/2023",
+      previously: "Dy Hd", // Changed from Deputy CEO
+      transferredTo: "Hd 123", // Changed from COO
+      approvedBy: "Hd xyz", // Changed from CEO
       remarks: "Organizational restructuring",
     },
   ],
+  "3": [
+    {
+      date: "01/01/2020",
+      previously: "NA",
+      transferredTo: "OC 123", // Changed from CTO
+      approvedBy: "Hd xyz", // Changed from CEO
+      remarks: "Initial appointment as OC 123", // Changed from CTO
+    },
+  ],
+  "4": [
+    {
+      date: "01/01/2020",
+      previously: "NA",
+      transferredTo: "OC xyz", // Changed from Head of HR
+      approvedBy: "Hd 123", // Changed from COO
+      remarks: "Initial appointment as OC xyz", // Changed from Head of HR
+    },
+    {
+      date: "01/07/2022",
+      previously: "OC xyz", // Changed from Head of HR
+      transferredTo: "OC 456", // Changed from Director of People Operations
+      approvedBy: "Hd xyz", // Changed from CEO
+      remarks: "Role expansion and title change",
+    },
+  ],
+  "5": [
+    {
+      date: "01/01/2020",
+      previously: "NA",
+      transferredTo: "OC ABC", // Changed from Head of Finance
+      approvedBy: "Hd 123", // Changed from COO
+      remarks: "Initial appointment as OC ABC", // Changed from Head of Finance
+    },
+    {
+      date: "15/03/2023",
+      previously: "OC ABC", // Changed from Head of Finance
+      transferredTo: "OC xxx", // Changed from CFO
+      approvedBy: "Hd xyz", // Changed from CEO
+      remarks: "Promotion to OC xxx position", // Changed from CFO
+    },
+  ],
+  "6": [
+    {
+      date: "01/01/2021",
+      previously: "NA",
+      transferredTo: "HR Specialist",
+      approvedBy: "OC xyz", // Changed from Head of HR
+      remarks: "New position created",
+    },
+    {
+      date: "01/04/2023",
+      previously: "HR Specialist",
+      transferredTo: "Senior HR Specialist",
+      approvedBy: "OC 456", // Changed from Director of People Operations
+      remarks: "Promotion based on performance",
+    },
+  ],
+  "7": [
+    {
+      date: "01/01/2021",
+      previously: "NA",
+      transferredTo: "Financial Analyst",
+      approvedBy: "OC ABC", // Changed from Head of Finance
+      remarks: "New position created",
+    },
+  ],
+  "8": [
+    {
+      date: "01/01/2021",
+      previously: "NA",
+      transferredTo: "Software Engineer",
+      approvedBy: "OC 123", // Changed from CTO
+      remarks: "New position created",
+    },
+    {
+      date: "01/10/2022",
+      previously: "Software Engineer",
+      transferredTo: "Senior Software Engineer",
+      approvedBy: "OC 123", // Changed from CTO
+      remarks: "Promotion based on technical expertise",
+    },
+  ],
+  "9": [
+    {
+      date: "01/01/2022",
+      previously: "NA",
+      transferredTo: "Hd xxxx",
+      approvedBy: "Hd xyz", // Changed from CEO
+      remarks: "New leadership position created",
+    },
+  ],
+  "10": [
+    {
+      date: "01/01/2022",
+      previously: "NA",
+      transferredTo: "Delta 1A",
+      approvedBy: "Hd",
+      remarks: "New position created in Delta structure",
+    },
+  ],
+  "11": [
+    {
+      date: "01/01/2022",
+      previously: "NA",
+      transferredTo: "Delta 1B",
+      approvedBy: "Hd",
+      remarks: "New position created in Delta structure",
+    },
+  ],
+  "12": [
+    {
+      date: "01/01/2022",
+      previously: "NA",
+      transferredTo: "OC xxx",
+      approvedBy: "Hd",
+      remarks: "New position created in Delta structure",
+    },
+  ],
+  "13": [
+    {
+      date: "01/01/2022",
+      previously: "NA",
+      transferredTo: "SM",
+      approvedBy: "Hd",
+      remarks: "New position created in Delta structure",
+    },
+  ],
+  "14": [
+    {
+      date: "01/01/2022",
+      previously: "NA",
+      transferredTo: "PC '1B' Coy",
+      approvedBy: "Hd",
+      remarks: "New position created in Delta structure",
+    },
+  ],
+  "15": [
+    {
+      date: "01/01/2022",
+      previously: "NA",
+      transferredTo: "PC 'xxx' Coy",
+      approvedBy: "Hd",
+      remarks: "New position created in Delta structure",
+    },
+  ],
+  "16": [
+    {
+      date: "01/02/2023",
+      previously: "NA",
+      transferredTo: "Dy Hd", // Changed from Deputy COO
+      approvedBy: "Hd xyz", // Changed from CEO
+      remarks: "New position created",
+    },
+  ],
+  "17": [
+    {
+      date: "01/03/2023",
+      previously: "NA",
+      transferredTo: "Senior HR Specialist",
+      approvedBy: "Director of People Operations",
+      remarks: "New position created",
+    },
+  ],
+  "18": [
+    {
+      date: "01/04/2023",
+      previously: "NA",
+      transferredTo: "Project Manager",
+      approvedBy: "OC 123", // Changed from CTO
+      remarks: "New position created",
+    },
+  ],
+  "19": [
+    {
+      date: "01/05/2023",
+      previously: "NA",
+      transferredTo: "Systems Analyst",
+      approvedBy: "OC 123", // Changed from CTO
+      remarks: "New position created",
+    },
+  ],
+  "20": [
+    {
+      date: "01/06/2023",
+      previously: "NA",
+      transferredTo: "Financial Controller",
+      approvedBy: "OC xxx", // Changed from CFO
+      remarks: "New position created",
+    },
+  ],
+  "21": [
+    {
+      date: "01/07/2023",
+      previously: "NA",
+      transferredTo: "Software Developer",
+      approvedBy: "OC 123", // Changed from CTO
+      remarks: "New position created",
+    },
+  ],
+  "22": [
+    {
+      date: "01/08/2023",
+      previously: "NA",
+      transferredTo: "Dy OC", // Changed from Deputy CTO
+      approvedBy: "Hd xyz", // Changed from CEO
+      remarks: "New position created",
+    },
+  ],
+  "23": [
+    {
+      date: "15/08/2023",
+      previously: "NA",
+      transferredTo: "Head of Cybersecurity",
+      approvedBy: "Hd xyz", // Changed from CEO
+      remarks: "New position created",
+    },
+  ],
+  "24": [
+    {
+      date: "01/09/2023",
+      previously: "NA",
+      transferredTo: "Senior Data Analyst",
+      approvedBy: "OC 123", // Changed from CTO
+      remarks: "New position created",
+    },
+  ],
+  "25": [
+    {
+      date: "15/09/2023",
+      previously: "NA",
+      transferredTo: "Operations Manager",
+      approvedBy: "Hd 123", // Changed from COO
+      remarks: "New position created",
+    },
+  ],
   "26": [
-    // IT Support Specialist
     {
       date: "01/10/2023",
-      previously: "IT Support",
+      previously: "NA",
       transferredTo: "IT Support Specialist",
-      approvedBy: "ME3 Kumar",
-      remarks: "Role standardization",
+      approvedBy: "OC 123", // Changed from CTO
+      remarks: "New position created",
     },
   ],
   "27": [
-    // Junior Accountant
     {
       date: "15/10/2023",
       previously: "NA",
       transferredTo: "Junior Accountant",
-      approvedBy: "ME3 Taylor",
-      remarks: "New entry-level position",
+      approvedBy: "OC xxx", // Changed from CFO
+      remarks: "New position created",
+    },
+  ],
+  "30": [
+    {
+      date: "15/10/2023",
+      previously: "NA",
+      transferredTo: "Test",
+      approvedBy: "Tester",
+      remarks: "New position created",
     },
   ],
 }
 
-// Initial version history
+// Updated initial version history to reflect transfers and other changes
 const initialVersionHistory: Record<string, VersionHistoryEntry[]> = {
   "1": [
     {
-      date: "14/1/2024",
+      date: "01/01/2020",
       modifiedBy: "System Admin",
       changes: [
         {
           field: "Title",
-          from: "CEO (Acting)",
-          to: "CEO",
+          from: "NA",
+          to: "Hd xyz", // Changed from CEO
         },
         {
-          field: "Requirements",
-          from: "8+ years experience",
-          to: "10+ years in executive leadership",
+          field: "Creation",
+          from: "NA",
+          to: "Position Created",
+        },
+      ],
+    },
+  ],
+  "2": [
+    {
+      date: "01/01/2020",
+      modifiedBy: "System Admin",
+      changes: [
+        {
+          field: "Title",
+          from: "NA",
+          to: "Hd 123", // Changed from COO
+        },
+        {
+          field: "Creation",
+          from: "NA",
+          to: "Position Created",
+        },
+      ],
+    },
+    {
+      date: "15/06/2021",
+      modifiedBy: "HR Manager",
+      changes: [
+        {
+          field: "Title",
+          from: "Hd 123", // Changed from COO
+          to: "Dy Hd", // Changed from Deputy CEO
+        },
+        {
+          field: "Remarks",
+          from: "Operations leadership",
+          to: "Deputy to Hd, overseeing all operations",
+        },
+      ],
+    },
+    {
+      date: "01/01/2023",
+      modifiedBy: "HR Director",
+      changes: [
+        {
+          field: "Title",
+          from: "Dy Hd", // Changed from Deputy CEO
+          to: "Hd 123", // Changed from COO
+        },
+        {
+          field: "Remarks",
+          from: "Deputy to Hd, overseeing all operations",
+          to: "Head of operations",
+        },
+      ],
+    },
+  ],
+  "3": [
+    {
+      date: "01/01/2020",
+      modifiedBy: "System Admin",
+      changes: [
+        {
+          field: "Title",
+          from: "NA",
+          to: "OC 123", // Changed from CTO
+        },
+        {
+          field: "Creation",
+          from: "NA",
+          to: "Position Created",
         },
       ],
     },
   ],
   "4": [
-    // Head of HR
     {
-      date: "01/07/2023",
-      modifiedBy: "HR Director",
+      date: "01/01/2020",
+      modifiedBy: "System Admin",
       changes: [
         {
-          field: "Requirements",
-          from: "5+ years in HR",
-          to: "6+ years in HR management",
+          field: "Title",
+          from: "NA",
+          to: "OC xyz", // Changed from Head of HR
         },
         {
-          field: "Priority",
-          from: "Medium",
-          to: "High",
+          field: "Creation",
+          from: "NA",
+          to: "Position Created",
+        },
+      ],
+    },
+    {
+      date: "01/07/2022",
+      modifiedBy: "HR Manager",
+      changes: [
+        {
+          field: "Title",
+          from: "OC xyz", // Changed from Head of HR
+          to: "OC 456", // Changed from Director of People Operations
+        },
+        {
+          field: "Remarks",
+          from: "HR leadership",
+          to: "Oversees all operations",
         },
       ],
     },
   ],
   "5": [
-    // Head of Finance
     {
-      date: "15/08/2023",
-      modifiedBy: "Finance Director",
+      date: "01/01/2020",
+      modifiedBy: "System Admin",
       changes: [
         {
-          field: "Requirements",
-          from: "5+ years in finance",
-          to: "6+ years in finance",
+          field: "Title",
+          from: "NA",
+          to: "OC ABC", // Changed from Head of Finance
+        },
+        {
+          field: "Creation",
+          from: "NA",
+          to: "Position Created",
+        },
+      ],
+    },
+    {
+      date: "15/03/2023",
+      modifiedBy: "HR Director",
+      changes: [
+        {
+          field: "Title",
+          from: "OC ABC", // Changed from Head of Finance
+          to: "OC xxx", // Changed from CFO
+        },
+        {
+          field: "Rank",
+          from: "ME5",
+          to: "ME6",
         },
         {
           field: "Remarks",
-          from: "Finance operations",
-          to: "Finance leadership",
+          from: "Finance leadership",
+          to: "Operations leadership",
         },
       ],
     },
   ],
-  "16": [
-    // Deputy COO
+  "6": [
     {
-      date: "01/02/2023",
-      modifiedBy: "COO",
+      date: "01/01/2021",
+      modifiedBy: "System Admin",
       changes: [
         {
-          field: "Requirements",
-          from: "5+ years in operations",
-          to: "6+ years in operations",
+          field: "Title",
+          from: "NA",
+          to: "HR Specialist",
         },
         {
-          field: "Priority",
-          from: "Medium",
-          to: "High",
+          field: "Creation",
+          from: "NA",
+          to: "Position Created",
         },
       ],
     },
-  ],
-  "17": [
-    // Senior HR Specialist
     {
-      date: "01/03/2023",
+      date: "01/04/2023",
       modifiedBy: "HR Manager",
       changes: [
         {
-          field: "Requirements",
-          from: "4+ years in HR",
-          to: "5+ years in HR",
+          field: "Title",
+          from: "HR Specialist",
+          to: "Senior HR Specialist",
+        },
+        {
+          field: "Remarks",
+          from: "HR operations",
+          to: "Senior HR role, focusing on strategic initiatives",
         },
       ],
     },
   ],
-  "20": [
-    // Financial Controller
+  "7": [
     {
-      date: "01/06/2023",
-      modifiedBy: "Head of Finance",
+      date: "01/01/2021",
+      modifiedBy: "System Admin",
       changes: [
         {
-          field: "Requirements",
-          from: "5+ years in finance",
-          to: "6+ years in financial control",
+          field: "Title",
+          from: "NA",
+          to: "Financial Analyst",
         },
         {
-          field: "Priority",
-          from: "Medium",
-          to: "High",
+          field: "Creation",
+          from: "NA",
+          to: "Position Created",
         },
       ],
     },
   ],
-  "22": [
-    // Deputy CTO
+  "8": [
     {
-      date: "01/08/2023",
+      date: "01/01/2021",
+      modifiedBy: "System Admin",
+      changes: [
+        {
+          field: "Title",
+          from: "NA",
+          to: "Software Engineer",
+        },
+        {
+          field: "Creation",
+          from: "NA",
+          to: "Position Created",
+        },
+      ],
+    },
+    {
+      date: "01/10/2022",
       modifiedBy: "CTO",
       changes: [
         {
-          field: "Requirements",
-          from: "5+ years in technical management",
-          to: "6+ years in technical management",
+          field: "Title",
+          from: "Software Engineer",
+          to: "Senior Software Engineer",
         },
         {
-          field: "Priority",
-          from: "Medium",
-          to: "High",
+          field: "Remarks",
+          from: "Software development",
+          to: "Senior role in software development, leading key projects",
         },
       ],
     },
   ],
-  "23": [
-    // Head of Cybersecurity
+  "9": [
     {
-      date: "15/08/2023",
-      modifiedBy: "CTO",
+      date: "01/01/2022",
+      modifiedBy: "System Admin",
       changes: [
         {
-          field: "Requirements",
-          from: "5+ years in cybersecurity",
-          to: "6+ years in cybersecurity",
+          field: "Title",
+          from: "NA",
+          to: "Hd xxxx",
         },
         {
-          field: "Priority",
-          from: "Medium",
-          to: "High",
+          field: "Creation",
+          from: "NA",
+          to: "Position Created",
+        },
+      ],
+    },
+  ],
+  "10": [
+    {
+      date: "01/01/2022",
+      modifiedBy: "System Admin",
+      changes: [
+        {
+          field: "Title",
+          from: "NA",
+          to: "Delta 1A",
+        },
+        {
+          field: "Creation",
+          from: "NA",
+          to: "Position Created",
         },
       ],
     },
@@ -890,6 +1104,8 @@ export function EstabProvider({ children }: { children: ReactNode }) {
         return pos
       }),
     )
+    // Trigger a custom event for immediate UI updates
+    window.dispatchEvent(new Event("estabUpdated"))
   }
 
   const addTransferHistory = (id: string | number, transfer: TransferData) => {
@@ -898,10 +1114,14 @@ export function EstabProvider({ children }: { children: ReactNode }) {
       [id.toString()]: [...(prev[id.toString()] || []), transfer],
     }))
 
+    // Update the position title after transfer
     updatePosition(id, {
       title: transfer.transferredTo,
       lastTransfer: transfer,
     })
+
+    // Trigger a custom event for immediate UI updates
+    window.dispatchEvent(new Event("estabTransferred"))
   }
 
   const addVersionHistory = (id: string | number, data: VersionHistoryEntry) => {

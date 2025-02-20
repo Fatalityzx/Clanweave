@@ -171,7 +171,7 @@ export function DetailedView({ onBack }: DetailedViewProps) {
 
               {/* Hd */}
               <div className="absolute left-1/2 -translate-x-1/2 top-[160px]">
-                <Node title="Hd" id="Hd" />
+                <Node title="Hd xxxx" id="Hd xxxx" />
                 <VerticalLine height="3rem" />
               </div>
 

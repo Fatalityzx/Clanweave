@@ -27,21 +27,21 @@ interface RequirementSection {
 // Updated requirements data with additional positions
 const defaultRequirementSections: RequirementSection[] = [
   {
-    title: "CEO",
+    title: "Hd xyz", // Changed from CEO
     minRank: "ME6 or Equivalent",
     vocationalReq: "ME",
     studyReq: "Masters/PhD in Business Administration or related field",
     remarks: "Extensive leadership experience required",
   },
   {
-    title: "COO",
+    title: "Hd 123", // Changed from COO
     minRank: "ME6 or Equivalent",
     vocationalReq: "ME",
     studyReq: "Masters in Business Administration or Engineering",
     remarks: "Strong operational and strategic planning skills required",
   },
   {
-    title: "Delta 1A",
+    title: "OC 1A", // Changed from Delta 1A
     minRank: "ME4 or Equivalent",
     vocationalReq: "ME",
     studyReq: "Bachelors/Masters in Engineering or related field",
@@ -50,7 +50,7 @@ const defaultRequirementSections: RequirementSection[] = [
     priority: "High",
   },
   {
-    title: "Delta 1B",
+    title: "OC 1B", // Changed from Delta 1B
     minRank: "ME4 or Equivalent",
     vocationalReq: "ME",
     studyReq: "Bachelors/Masters in Engineering or related field",
@@ -59,7 +59,7 @@ const defaultRequirementSections: RequirementSection[] = [
     priority: "High",
   },
   {
-    title: "SM",
+    title: "SM xxxx", // Changed from SM
     minRank: "ME3 or Equivalent",
     vocationalReq: "ME",
     studyReq: "Bachelors in Engineering or related technical field",

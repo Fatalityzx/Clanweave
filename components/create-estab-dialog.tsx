@@ -6,8 +6,9 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { RankSelect } from "@/components/RankSelect"
 import { useEstab } from "@/contexts/EstabContext"
+import { useRouter } from "next/navigation"
 
 interface CreateEstabDialogProps {
   open: boolean
@@ -16,6 +17,7 @@ interface CreateEstabDialogProps {
 
 export function CreateEstabDialog({ open, onOpenChange }: CreateEstabDialogProps) {
   const { addNewEstab } = useEstab()
+  const router = useRouter()
   const [title, setTitle] = useState("")
   const [posnId, setPosnId] = useState("")
   const [estabRank, setEstabRank] = useState("")
@@ -28,12 +30,20 @@ export function CreateEstabDialog({ open, onOpenChange }: CreateEstabDialogProps
       const formattedDate = today.toLocaleDateString("en-GB") // DD/MM/YYYY format
 
       const newEstab = {
-        id: Date.now(), // Use timestamp as temporary ID
+        id: Date.now().toString(), // Use timestamp as string ID
         title,
         posnId,
-        estabRank,
+        rank: estabRank,
         creationDate: formattedDate,
         remarks,
+        personnel: "Vacant",
+        unit: "New Unit", // You may want to add a field for this in the form
+        requirements: {
+          minRank: estabRank,
+          experience: "Not specified",
+          priority: "Medium",
+          readyDate: formattedDate,
+        },
         lastTransfer: {
           date: formattedDate,
           previously: "NA",
@@ -46,6 +56,7 @@ export function CreateEstabDialog({ open, onOpenChange }: CreateEstabDialogProps
       addNewEstab(newEstab)
       onOpenChange(false)
       resetForm()
+      router.refresh() // Refresh the page to show the new estab
     }
   }
 
@@ -80,19 +91,7 @@ export function CreateEstabDialog({ open, onOpenChange }: CreateEstabDialogProps
             <Label htmlFor="estabRank" className="text-right">
               Estab Rank
             </Label>
-            <Select value={estabRank} onValueChange={setEstabRank}>
-              <SelectTrigger className="col-span-3">
-                <SelectValue placeholder="Select rank" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="ME1">ME1</SelectItem>
-                <SelectItem value="ME2">ME2</SelectItem>
-                <SelectItem value="ME3">ME3</SelectItem>
-                <SelectItem value="ME4">ME4</SelectItem>
-                <SelectItem value="ME5">ME5</SelectItem>
-                <SelectItem value="ME6">ME6</SelectItem>
-              </SelectContent>
-            </Select>
+            <RankSelect value={estabRank} onValueChange={setEstabRank} />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="approvedBy" className="text-right">
@@ -121,7 +120,15 @@ export function CreateEstabDialog({ open, onOpenChange }: CreateEstabDialogProps
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
-          <Button onClick={handleCreate} disabled={!title || !posnId || !estabRank || !approvedBy}>
+          <Button
+            onClick={() => {
+              handleCreate()
+              onOpenChange(false)
+              // Dispatch a custom event to notify that a new estab has been created
+              window.dispatchEvent(new CustomEvent("estabCreated"))
+            }}
+            disabled={!title || !posnId || !estabRank || !approvedBy}
+          >
             Create Estab
           </Button>
         </div>

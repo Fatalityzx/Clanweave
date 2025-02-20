@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
@@ -39,7 +41,23 @@ export interface ButtonProps
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
-    return <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />
+    return (
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        type={asChild ? undefined : "button"}
+        onClick={(event) => {
+          if (asChild) {
+            // If it's a Slot, manually trigger the click on the first child
+            const firstChild = event.currentTarget.firstChild as HTMLElement
+            firstChild?.click()
+          }
+          // Call the original onClick if it exists
+          props.onClick?.(event)
+        }}
+        {...props}
+      />
+    )
   },
 )
 Button.displayName = "Button"

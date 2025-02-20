@@ -60,17 +60,17 @@ function generateCourses(rank: string, position: string): Course[] {
   }
 
   const positionSpecificCourses = {
-    "Delta 1A": [
-      { name: "Delta Operations", criteria: "Delta 1A" },
-      { name: "Strategic Communications", criteria: "Delta 1A" },
+    "OC 1A": [
+      { name: "Delta Operations", criteria: "OC 1A" },
+      { name: "Strategic Communications", criteria: "OC 1A" },
     ],
-    "Delta 1B": [
-      { name: "Delta Tactics", criteria: "Delta 1B" },
-      { name: "Resource Management", criteria: "Delta 1B" },
+    "OC 1B": [
+      { name: "Delta Tactics", criteria: "OC 1B" },
+      { name: "Resource Management", criteria: "OC 1B" },
     ],
-    SM: [
-      { name: "Security Management", criteria: "SM" },
-      { name: "Risk Assessment", criteria: "SM" },
+    "SM xxxx": [
+      { name: "Security Management", criteria: "SM xxxx" },
+      { name: "Risk Assessment", criteria: "SM xxxx" },
     ],
     "OC xxx": [
       { name: "Company Command", criteria: "OC xxx" },
@@ -84,9 +84,9 @@ function generateCourses(rank: string, position: string): Course[] {
       { name: "Special Operations", criteria: "PC 'xxx' Coy" },
       { name: "Advanced Combat Techniques", criteria: "PC 'xxx' Coy" },
     ],
-    HD: [
-      { name: "Department Management", criteria: "HD" },
-      { name: "Strategic Planning", criteria: "HD" },
+    "Hd xxxx": [
+      { name: "Department Management", criteria: "Hd xxxx" },
+      { name: "Strategic Planning", criteria: "Hd xxxx" },
     ],
   }
 
