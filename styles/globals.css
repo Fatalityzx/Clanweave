@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary: 212 100% 40%;
+    --primary-hover: 212 100% 35%;
+  }
+}
+
