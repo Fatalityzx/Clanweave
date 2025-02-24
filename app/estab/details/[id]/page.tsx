@@ -163,16 +163,18 @@ export default function EstabDetails() {
           </div>
 
           {/* Action Buttons */}
-          <div className="flex justify-end gap-4 mb-6">
-            <Button className="bg-[#0066cc] hover:bg-[#0052a3]" onClick={() => setReprofileOpen(true)}>
-              Re-Profiling
-            </Button>
+          <div className="flex justify-between gap-4 mb-6">
             <Button className="bg-[#0066cc] hover:bg-[#0052a3]" onClick={() => setTransferOpen(true)}>
               Transfer Estab
             </Button>
-            <Button variant="outline" onClick={() => setVersionHistoryOpen(true)}>
-              View Version History
-            </Button>
+            <div className="flex gap-4">
+              <Button className="bg-[#0066cc] hover:bg-[#0052a3]" onClick={() => setReprofileOpen(true)}>
+                Re-Profiling
+              </Button>
+              <Button variant="outline" onClick={() => setVersionHistoryOpen(true)}>
+                View Profile History
+              </Button>
+            </div>
           </div>
 
           {/* Transfer History Table */}
