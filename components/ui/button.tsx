@@ -11,7 +11,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        default: "bg-blue-500 text-white hover:bg-blue-600",
         destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
@@ -41,18 +41,19 @@ export interface ButtonProps
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
+    const finalClassName = cn(buttonVariants({ variant, size, className }))
+    console.log("Button className:", finalClassName) // Debug log
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={finalClassName}
         ref={ref}
         type={asChild ? undefined : "button"}
         onClick={(event) => {
+          console.log("Button clicked, variant:", variant) // Debug log
           if (asChild) {
-            // If it's a Slot, manually trigger the click on the first child
             const firstChild = event.currentTarget.firstChild as HTMLElement
             firstChild?.click()
           }
-          // Call the original onClick if it exists
           props.onClick?.(event)
         }}
         {...props}

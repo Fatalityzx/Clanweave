@@ -14,10 +14,17 @@ const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
 )
 CardHeader.displayName = "CardHeader"
 
-const CardTitle = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn("text-2xl font-semibold leading-none tracking-tight", className)} {...props} />
-  ),
+const CardTitle = React.forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTMLHeadingElement>>(
+  ({ className, children, ...props }, ref) => {
+    // Replace "METs" with "ME1s" in the children if it's a string
+    const updatedChildren = typeof children === "string" ? children.replace(/METs/g, "ME1s") : children
+
+    return (
+      <h3 ref={ref} className={cn("text-2xl font-semibold leading-none tracking-tight", className)} {...props}>
+        {updatedChildren}
+      </h3>
+    )
+  },
 )
 CardTitle.displayName = "CardTitle"
 

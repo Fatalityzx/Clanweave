@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from "recharts"
 import { ArrowUpRight, ArrowDownRight, Users, TrendingUp } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 const fullData = [
   { year: 2000, count: 15, attrition: 2 },
@@ -98,7 +99,19 @@ export default function AnalysisDashboard() {
         <Header />
         <main className="p-8 space-y-8">
           <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-bold text-gray-800">Analysis Dashboard</h1>
+            <div className="flex items-center space-x-4">
+              <h1 className="text-3xl font-bold text-gray-800">Analysis Dashboard</h1>
+              <Button
+                variant="default"
+                size="sm"
+                onClick={() => {
+                  // Add your data pulling logic here
+                  console.log("Pulling data...")
+                }}
+              >
+                Pull Data
+              </Button>
+            </div>
             <div className="flex items-center space-x-4">
               <div className="text-sm text-gray-500">Snapshot data as at 14/1/2024</div>
               <Select value={timeRange} onValueChange={setTimeRange}>

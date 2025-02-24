@@ -2,7 +2,7 @@
 
 import React from "react"
 
-import { Bell, ChevronDown, Search } from "lucide-react"
+import { Bell, ChevronDown, Search, UserCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
@@ -63,7 +63,7 @@ export function Header() {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="flex items-center gap-2">
                 <div className="flex items-center gap-2">
-                  <img src="/placeholder-user.jpg" alt="Admin" className="w-8 h-8 rounded-full" />
+                  <UserCircle className="w-8 h-8 text-gray-600" />
                   <span>Admin Account</span>
                   <ChevronDown className="h-4 w-4" />
                 </div>
