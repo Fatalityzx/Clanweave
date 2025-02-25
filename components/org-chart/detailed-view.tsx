@@ -177,7 +177,7 @@ export function DetailedView({ onBack }: DetailedViewProps) {
 
               {/* SM and connections */}
               <div className="absolute left-[20%] top-[240px]">
-                <Node title="SM" id="SM" />
+                <Node title="SM xxxx" id="SM xxxx" />
               </div>
 
               {/* SM connection line */}
@@ -220,16 +220,16 @@ export function DetailedView({ onBack }: DetailedViewProps) {
                   }}
                 />
 
-                {/* Delta 1A and PC '1A' Coy */}
+                {/* OC 1A and PC '1A' Coy */}
                 <div className="absolute left-[20%] -translate-x-1/2">
-                  <Node title="Delta 1A" id="Delta 1A" />
+                  <Node title="OC 1A" id="OC 1A" />
                   <VerticalLine height="3rem" />
                   <Node title="PC '1A' Coy (Vacant)" isVacant id="PC '1A' Coy" />
                 </div>
 
-                {/* Delta 1B and PC '1B' Coy */}
+                {/* OC 1B and PC '1B' Coy */}
                 <div className="absolute left-1/2 -translate-x-1/2">
-                  <Node title="Delta 1B" id="Delta 1B" />
+                  <Node title="OC 1B" id="OC 1B" />
                   <VerticalLine height="3rem" />
                   <Node title="PC '1B' Coy" id="PC '1B' Coy" />
                 </div>

@@ -84,6 +84,23 @@ export default function EstabDetails() {
 
   const displayTitle = getNewPositionName(position.title)
 
+  const getTransferHistory = (id: string | number): any[] => {
+    // Get the transfer history
+    const history = transferHistory[id] || []
+
+    // Sort the history by date in descending order (newest first)
+    return history.sort((a, b) => {
+      // Convert DD/MM/YYYY to Date objects for comparison
+      const [dayA, monthA, yearA] = a.date.split("/")
+      const [dayB, monthB, yearB] = b.date.split("/")
+      const dateA = new Date(Number.parseInt(yearA), Number.parseInt(monthA) - 1, Number.parseInt(dayA))
+      const dateB = new Date(Number.parseInt(yearB), Number.parseInt(monthB) - 1, Number.parseInt(dayB))
+      return dateB.getTime() - dateA.getTime() // Most recent first
+    })
+  }
+
+  const sortedTransferHistory = getTransferHistory(id)
+
   return (
     <div className="flex min-h-screen">
       <CollapsibleSidebar />
@@ -190,8 +207,8 @@ export default function EstabDetails() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {positionTransferHistory.length > 0 ? (
-                  positionTransferHistory.map((record, index) => (
+                {sortedTransferHistory.length > 0 ? (
+                  sortedTransferHistory.map((record, index) => (
                     <TableRow key={index}>
                       <TableCell>{record.date}</TableCell>
                       <TableCell>{getNewPositionName(record.previously)}</TableCell>

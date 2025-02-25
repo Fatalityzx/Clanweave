@@ -19,116 +19,278 @@ interface TransferHistory {
 }
 
 interface EstabRequirement {
+  title: string
   minRank: string
-  criteria: string
-  priority: string
-  remarks: string
+  vocationalReq: string
+  studyReq: string
+  remarks?: string
+  criteria?: string
+  priority?: string
+  readyDate?: string
+  unit?: string
 }
 
-const transferHistory: TransferHistory[] = [
-  {
-    date: "20/5/2024",
-    previously: "OC 'C' Coy",
-    transferredTo: "OC xxx",
-    approvedBy: "ME5 xxx",
-    remarks: "Reasoning as to why this was converted from Delta to Delta 1 is such....",
-  },
-  {
-    date: "20/5/2024",
-    previously: "OC 'N' Coy",
-    transferredTo: "OC 'C' Coy",
-    approvedBy: "ME6 xxx",
-    remarks: "info 1, 2, 3",
-  },
-  {
-    date: "16/07/2016",
-    previously: "OC ABC Coy",
-    transferredTo: "NA",
-    approvedBy: "COL xxx",
-    remarks: "Estab Creation",
-  },
-]
+const getTransferHistory = (position: string): TransferHistory[] => {
+  try {
+    // Default transfer history with creation date set to 01/01/2020
+    const defaultHistory = [
+      {
+        date: "01/01/2020",
+        previously: "NA",
+        transferredTo: position,
+        approvedBy: "Initial Approving Authority",
+        remarks: "Initial establishment of position",
+      },
+    ]
 
-const estabRequirements: { [key: string]: EstabRequirement } = {
-  "SM xxxx": {
-    // Changed from SM
-    minRank: "ME3",
-    criteria: "3+ years experience in technical operations, supervisory skills",
-    priority: "Medium",
-    remarks: "Key role in coordinating technical teams and operations",
-  },
-  "OC 1A": {
-    // Changed from Delta 1A
-    minRank: "ME4",
-    criteria: "5+ years experience in engineering management, leadership skills",
-    priority: "High",
-    remarks: "Critical position overseeing major technical operations",
-  },
-  "OC 1B": {
-    // Changed from Delta 1B
-    minRank: "ME4",
-    criteria: "5+ years experience in technical project management",
-    priority: "High",
-    remarks: "Responsible for leading complex technical projects",
-  },
-  "OC xxx": {
-    minRank: "ME4",
-    criteria: "7+ years experience in operations management, strategic planning skills",
-    priority: "High",
-    remarks: "Key leadership role in operational command",
-  },
-  "PC '1B' Coy": {
-    minRank: "ME2",
-    criteria: "2+ years experience in team leadership, technical proficiency",
-    priority: "Medium",
-    remarks: "Responsible for leading and managing a technical team",
-  },
-  "PC 'xxx' Coy": {
-    minRank: "ME2",
-    criteria: "2+ years experience in project coordination, technical background",
-    priority: "Medium",
-    remarks: "Oversees specific technical projects and team performance",
-  },
-  "Hd xxxx": {
-    // Changed from HD
-    minRank: "ME6",
-    criteria: "10+ years experience in senior leadership, strategic vision",
-    priority: "Critical",
-    remarks: "Top leadership position, responsible for overall direction and strategy",
-  },
+    // Specific histories for different position types
+    let history: TransferHistory[] = []
+
+    if (position.startsWith("OC")) {
+      history = [
+        ...defaultHistory,
+        {
+          date: "15/06/2022",
+          previously: position,
+          transferredTo: "OC yyy",
+          approvedBy: "COL Marcus Chen",
+          remarks: "Restructuring of OC positions across units",
+        },
+        {
+          date: "01/12/2023",
+          previously: "OC yyy",
+          transferredTo: position,
+          approvedBy: "ME6 William Tan",
+          remarks: "Reallocation of OC position due to operational needs",
+        },
+      ]
+    } else if (position.startsWith("SM")) {
+      history = [
+        ...defaultHistory,
+        {
+          date: "15/07/2022",
+          previously: position,
+          transferredTo: "SM yyyy",
+          approvedBy: "COL Marcus Chen",
+          remarks: "Consolidation of SM roles in technical oversight",
+        },
+        {
+          date: "01/01/2024",
+          previously: "SM yyyy",
+          transferredTo: position,
+          approvedBy: "ME6 William Tan",
+          remarks: "Reallocation of SM position to new department",
+        },
+      ]
+    } else if (position.startsWith("PC")) {
+      history = [
+        ...defaultHistory,
+        {
+          date: "15/10/2022",
+          previously: position,
+          transferredTo: "PC 'zzz' Coy",
+          approvedBy: "COL James Wong",
+          remarks: "Restructuring of PC positions",
+        },
+        {
+          date: "01/03/2023",
+          previously: "PC 'zzz' Coy",
+          transferredTo: "PC 'yyy' Coy",
+          approvedBy: "ME6 William Tan",
+          remarks: "Further restructuring of PC positions",
+        },
+        {
+          date: "15/10/2024",
+          previously: "PC 'yyy' Coy",
+          transferredTo: position,
+          approvedBy: "ME5 David Lee",
+          remarks: "Reallocation of PC position within the company",
+        },
+      ]
+    } else if (position.startsWith("Hd")) {
+      history = [
+        ...defaultHistory,
+        {
+          date: "01/01/2021",
+          previously: position,
+          transferredTo: "Hd Admin",
+          approvedBy: "BG David Wong",
+          remarks: "Transition of HD role from initial to administrative focus",
+        },
+        {
+          date: "01/07/2023",
+          previously: "Hd Admin",
+          transferredTo: position,
+          approvedBy: "BG Marcus Lee",
+          remarks: "Realignment of HD position to focus on technological advancements",
+        },
+      ]
+    } else {
+      // If no specific history is found, return the default history
+      history = defaultHistory
+    }
+
+    // Sort the history array by date in descending order
+    return history.sort((a, b) => {
+      const dateA = new Date(a.date.split("/").reverse().join("-"))
+      const dateB = new Date(b.date.split("/").reverse().join("-"))
+      return dateB.getTime() - dateA.getTime()
+    })
+  } catch (error) {
+    console.error("Error in getTransferHistory:", error)
+    return [] // Return empty array instead of throwing error
+  }
 }
 
-type ViewType = "details" | "lineage" | "requirements"
+const getEstabRequirements = (position: string): EstabRequirement => {
+  const defaultRequirementSections = [
+    {
+      title: "Hd xyz",
+      minRank: "ME6 or Equivalent",
+      vocationalReq: "ME",
+      studyReq: "Masters/PhD in Business Administration or related field",
+      remarks: "Extensive leadership experience required",
+    },
+    {
+      title: "Hd 123",
+      minRank: "ME6 or Equivalent",
+      vocationalReq: "ME",
+      studyReq: "Masters in Business Administration or Engineering",
+      remarks: "Strong operational and strategic planning skills required",
+    },
+    {
+      title: "Hd xxxx",
+      minRank: "ME6 or Equivalent",
+      vocationalReq: "ME",
+      studyReq: "Masters/PhD in Engineering or related technical field",
+      remarks: "Strong technical leadership and strategic planning required",
+      criteria: "10+ years experience in technical leadership",
+      priority: "High",
+    },
+    {
+      title: "OC 1A",
+      minRank: "ME4 or Equivalent",
+      vocationalReq: "ME",
+      studyReq: "Bachelors/Masters in Engineering or related field",
+      remarks: "Experience in team leadership and project management",
+      criteria: "5+ years experience in engineering management",
+      priority: "High",
+    },
+    {
+      title: "OC 1B",
+      minRank: "ME4 or Equivalent",
+      vocationalReq: "ME",
+      studyReq: "Bachelors/Masters in Engineering or related field",
+      remarks: "Strong technical background with leadership capabilities",
+      criteria: "5+ years experience in technical operations",
+      priority: "High",
+    },
+    {
+      title: "OC xxx", // Added requirements for OC xxx
+      minRank: "ME4 or Equivalent",
+      vocationalReq: "ME",
+      studyReq: "Bachelors/Masters in Engineering or related field",
+      remarks: "Experience in operations management and team leadership",
+      criteria: "5+ years experience in operations management",
+      priority: "High",
+      readyDate: "01/12/2023",
+    },
+    {
+      title: "PC xxx", // Added requirements for PC xxx
+      minRank: "ME2 or Equivalent",
+      vocationalReq: "ME",
+      studyReq: "Bachelors in Engineering or related field",
+      remarks: "Experience in technical operations and team coordination",
+      criteria: "3+ years experience in technical operations",
+      priority: "Medium",
+      readyDate: "01/01/2024",
+    },
+    {
+      title: "PC '1B' Coy", // Added requirements for PC '1B' Coy
+      minRank: "ME2 or Equivalent",
+      vocationalReq: "ME",
+      studyReq: "Bachelors in Engineering or related field",
+      remarks: "Experience in company-level operations and team management",
+      criteria: "3+ years experience in technical operations",
+      priority: "High",
+      readyDate: "01/01/2024",
+    },
+    {
+      title: "SM xxxx",
+      minRank: "ME3 or Equivalent",
+      vocationalReq: "ME",
+      studyReq: "Bachelors in Engineering or related technical field",
+      remarks: "Experience in technical supervision and team coordination",
+      criteria: "3+ years experience in technical operations",
+      priority: "Medium",
+    },
+  ]
+
+  const requirement = defaultRequirementSections.find((req) => req.title === position)
+  return (
+    requirement || {
+      title: position,
+      minRank: "Not specified",
+      vocationalReq: "Not specified",
+      studyReq: "Not specified",
+      remarks: "Not specified",
+      criteria: "Not specified",
+      priority: "Not specified",
+      readyDate: "Not specified",
+    }
+  )
+}
 
 export default function EstabDetailsPage() {
   const router = useRouter()
   const params = useParams()
   const { importedData } = useImportedData()
   const id = params.id as string
-  const [currentView, setCurrentView] = useState<ViewType>("details")
+  const [currentView, setCurrentView] = useState<"details" | "lineage" | "requirements">("details")
 
   // Decode the URL parameter and handle special characters
   const decodedId = decodeURIComponent(id).replace(/%20/g, " ")
 
   // Find the position in imported data using multiple matching criteria
-  const position = importedData?.positions.find((p) => {
-    // Try matching by ID first
-    if (p.ID.toString() === decodedId) return true
+  const position = importedData?.positions?.find((p) => {
+    try {
+      // Try matching by ID first
+      if (p.ID.toString() === decodedId) return true
 
-    // Then try matching by Position name (case insensitive and normalized)
-    const normalizedPosition = p.Position.toLowerCase().replace(/[^a-z0-9]/g, "")
-    const normalizedId = decodedId.toLowerCase().replace(/[^a-z0-9]/g, "")
+      // Then try matching by Position name (case insensitive and normalized)
+      const normalizedPosition = p.Position.toLowerCase().replace(/[^a-z0-9]/g, "")
+      const normalizedId = decodedId.toLowerCase().replace(/[^a-z0-9]/g, "")
 
-    if (normalizedPosition === normalizedId) return true
+      if (normalizedPosition === normalizedId) return true
 
-    // Try matching by POSN ID
-    if (p["POSN ID"] === decodedId) return true
+      // Try matching by POSN ID
+      if (p["POSN ID"] === decodedId) return true
 
-    // Try matching by exact position name
-    if (p.Position === decodedId) return true
+      // Try matching by exact position name
+      if (p.Position === decodedId) return true
 
-    return false
+      return false
+    } catch (error) {
+      console.error("Error in position matching:", error)
+      return false
+    }
   })
+
+  if (!importedData?.positions) {
+    return (
+      <div className="flex min-h-screen">
+        <CollapsibleSidebar />
+        <div className="flex-1">
+          <Header />
+          <main className="p-8">
+            <div className="text-center">
+              <p>Loading data...</p>
+            </div>
+          </main>
+        </div>
+      </div>
+    )
+  }
 
   if (!position) {
     return (
@@ -149,12 +311,8 @@ export default function EstabDetailsPage() {
     )
   }
 
-  const requirements = estabRequirements[position.Position] || {
-    minRank: position.Rank,
-    criteria: "Not specified",
-    priority: "Not specified",
-    remarks: "Not specified",
-  }
+  const transferHistory = getTransferHistory(position.Position)
+  const requirements = getEstabRequirements(position.Position)
 
   return (
     <div className="flex min-h-screen">
@@ -167,9 +325,7 @@ export default function EstabDetailsPage() {
             <div className="flex items-center gap-2 text-sm text-gray-600">
               <Button
                 variant="ghost"
-                onClick={() => {
-                  router.push("/organization/structure")
-                }}
+                onClick={() => router.push("/organization/structure")}
                 className="flex items-center gap-1 hover:text-gray-700 px-0"
               >
                 <ChevronLeft className="h-4 w-4" />
@@ -186,7 +342,7 @@ export default function EstabDetailsPage() {
             </Button>
           </div>
 
-          {/* Profile Card - Always visible */}
+          {/* Profile Card */}
           <div className="bg-white rounded-lg p-8 mb-6">
             <div className="flex items-start gap-8">
               <div className="flex-shrink-0">
@@ -216,7 +372,7 @@ export default function EstabDetailsPage() {
                   </div>
                   <div>
                     <div className="text-gray-600">Estab Creation Date:</div>
-                    <div>{position["Creation Date"]}</div>
+                    <div>01/01/2020</div>
                   </div>
                   <div>
                     <div className="text-gray-600">POSN ID:</div>
@@ -244,7 +400,7 @@ export default function EstabDetailsPage() {
                   {position["Vacant Since"] && (
                     <div>
                       <div className="text-gray-600">Vacant Since:</div>
-                      <div>{position["Vacant Since"]}</div>
+                      <div>15/10/2024</div>
                     </div>
                   )}
                 </div>
@@ -265,43 +421,6 @@ export default function EstabDetailsPage() {
               </div>
             </div>
           </div>
-
-          {/* Requirements View */}
-          {currentView === "requirements" && (
-            <div className="bg-[#E5F6FD] rounded-lg p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-semibold">Estab Requirements for {position.Position}</h2>
-                <Link href={`/estab/requirements/${position.ID}`}>
-                  <Button className="bg-[#0066cc] hover:bg-[#0052a3] gap-2">
-                    View Other Estab Requirements
-                    <ChevronRight className="h-4 w-4" />
-                  </Button>
-                </Link>
-              </div>
-              <div className="grid grid-cols-2 gap-6">
-                <div>
-                  <div className="font-medium mb-2">Min. Rank:</div>
-                  <div>{requirements.minRank}</div>
-                </div>
-                <div>
-                  <div className="font-medium mb-2">Criteria:</div>
-                  <div>{requirements.criteria}</div>
-                </div>
-                <div>
-                  <div className="font-medium mb-2">Priority:</div>
-                  <div>{requirements.priority}</div>
-                </div>
-                <div>
-                  <div className="font-medium mb-2">Estab Ready Date:</div>
-                  <div>{position["Estab Ready Date"] || "Not specified"}</div>
-                </div>
-                <div className="col-span-2">
-                  <div className="font-medium mb-2">Remarks:</div>
-                  <div>{requirements.remarks}</div>
-                </div>
-              </div>
-            </div>
-          )}
 
           {/* Lineage View */}
           {currentView === "lineage" && (
@@ -331,6 +450,59 @@ export default function EstabDetailsPage() {
                   ))}
                 </TableBody>
               </Table>
+            </div>
+          )}
+
+          {/* Updated Requirements View */}
+          {currentView === "requirements" && (
+            <div className="bg-[#E5F6FD] rounded-lg p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-lg font-semibold">Estab Requirements for {position.Position}</h2>
+                <Link href={`/estab/requirements/${position.ID}`}>
+                  <Button className="bg-[#0066cc] hover:bg-[#0052a3] gap-2">
+                    View Other Estab Requirements
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
+                </Link>
+              </div>
+              <div className="space-y-6">
+                <div className="grid grid-cols-2 gap-6">
+                  <div>
+                    <div className="font-medium mb-2">Min. Rank:</div>
+                    <div>{requirements.minRank}</div>
+                  </div>
+                  <div>
+                    <div className="font-medium mb-2">Vocational requirement:</div>
+                    <div>{requirements.vocationalReq}</div>
+                  </div>
+                </div>
+                <div>
+                  <div className="font-medium mb-2">Study requirement:</div>
+                  <div>{requirements.studyReq}</div>
+                </div>
+                {requirements.criteria && (
+                  <div>
+                    <div className="font-medium mb-2">Criteria:</div>
+                    <div>{requirements.criteria}</div>
+                  </div>
+                )}
+                {requirements.priority && (
+                  <div>
+                    <div className="font-medium mb-2">Priority:</div>
+                    <div>{requirements.priority}</div>
+                  </div>
+                )}
+                {requirements.readyDate && (
+                  <div>
+                    <div className="font-medium mb-2">Estab Ready Date:</div>
+                    <div>{requirements.readyDate}</div>
+                  </div>
+                )}
+                <div>
+                  <div className="font-medium mb-2">Remarks:</div>
+                  <div>{requirements.remarks}</div>
+                </div>
+              </div>
             </div>
           )}
         </main>

@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { CollapsibleSidebar } from "@/components/layout/collapsible-sidebar"
 import { Header } from "@/components/header"
@@ -23,6 +22,48 @@ export default function StructurePage() {
     setSelectedPositionId(id)
   }
 
+  // Updated organization data with the new names
+  const orgData = {
+    id: "HQ xxxx",
+    children: [
+      {
+        id: "Hd xxxx",
+        children: [
+          {
+            id: "SM xxxx", // Changed from "SM"
+            children: [
+              {
+                id: "OC 1A", // Changed from "Delta 1A"
+                children: [
+                  {
+                    id: "PC '1A' Coy",
+                    vacant: true,
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            id: "OC 1B", // Changed from "Delta 1B"
+            children: [
+              {
+                id: "PC '1B' Coy",
+              },
+            ],
+          },
+          {
+            id: "OC xxx",
+            children: [
+              {
+                id: "PC 'xxx' Coy",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  }
+
   return (
     <div className="flex min-h-screen">
       <CollapsibleSidebar />
@@ -37,14 +78,15 @@ export default function StructurePage() {
             <div className="border rounded-lg bg-blue-50 p-6">
               <h2 className="text-lg font-medium mb-4">Organization Structure Overview</h2>
               <div className="grid grid-cols-3 gap-6">
-                <OverviewSection color="purple" onClick={() => setShowDetailed(true)} />
+                <OverviewSection color="purple" onClick={() => setShowDetailed(true)} data={orgData} />
                 <OverviewSection color="red" onClick={() => console.log("Red section clicked")} />
                 <OverviewSection color="green" onClick={() => console.log("Green section clicked")} />
               </div>
             </div>
           ) : (
-            <DetailedView onBack={() => setShowDetailed(false)} />
+            <DetailedView onBack={() => setShowDetailed(false)} data={orgData} />
           )}
+
           {selectedNode && (
             <div className="fixed top-0 right-0 z-50 bg-white border rounded-lg shadow-lg w-64">
               <div className="p-4">

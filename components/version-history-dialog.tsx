@@ -18,6 +18,16 @@ interface VersionHistoryDialogProps {
 }
 
 export function VersionHistoryDialog({ open, onOpenChange, versionHistory }: VersionHistoryDialogProps) {
+  // Create a new array and sort it by date in descending order
+  const sortedHistory = [...versionHistory].sort((a, b) => {
+    // Convert DD/MM/YYYY to Date objects for comparison
+    const [dayA, monthA, yearA] = a.date.split("/")
+    const [dayB, monthB, yearB] = b.date.split("/")
+    const dateA = new Date(Number.parseInt(yearA), Number.parseInt(monthA) - 1, Number.parseInt(dayA))
+    const dateB = new Date(Number.parseInt(yearB), Number.parseInt(monthB) - 1, Number.parseInt(dayB))
+    return dateB.getTime() - dateA.getTime() // Most recent first
+  })
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[800px]">
@@ -36,7 +46,7 @@ export function VersionHistoryDialog({ open, onOpenChange, versionHistory }: Ver
               </TableRow>
             </TableHeader>
             <TableBody>
-              {versionHistory.map((version, idx) =>
+              {sortedHistory.map((version, idx) =>
                 version.changes.map((change, changeIdx) => (
                   <TableRow key={`${idx}-${changeIdx}`}>
                     {changeIdx === 0 && (
