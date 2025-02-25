@@ -54,27 +54,79 @@ export function PriorityRulesDialog({ open, onOpenChange }: PriorityRulesDialogP
         <div className="mt-6 space-y-8">
           <h3 className="text-lg font-semibold text-gray-700 border-b pb-2 antialiased">Priority Rules</h3>
 
-          <PrioritySection
-            color="red"
-            title="Red Priority Threshold"
-            value={redThreshold}
-            setValue={setRedThreshold}
-            onIncrement={() => handleIncrement(setRedThreshold, redThreshold)}
-            onDecrement={() => handleDecrement(setRedThreshold, redThreshold)}
-          />
-
-          <PrioritySection
-            color="yellow"
-            title="Yellow Priority Threshold"
-            value={yellowThreshold}
-            setValue={setYellowThreshold}
-            onIncrement={() => handleIncrement(setYellowThreshold, yellowThreshold)}
-            onDecrement={() => handleDecrement(setYellowThreshold, yellowThreshold)}
-          />
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-red-500" />
+              <span className="font-semibold text-gray-700 antialiased">Red Priority Threshold</span>
+            </div>
+            <div className="flex items-center gap-2 ml-5">
+              <div className="relative">
+                <Input
+                  type="text"
+                  value={redThreshold}
+                  onChange={(e) => setRedThreshold(e.target.value)}
+                  className="w-24 pr-8 text-center antialiased"
+                />
+                <div className="absolute right-1 top-1 bottom-1 flex flex-col">
+                  <button
+                    type="button"
+                    onClick={() => handleIncrement(setRedThreshold, redThreshold)}
+                    className="flex-1 px-1 hover:bg-gray-100 rounded-sm transition-colors"
+                  >
+                    <ChevronUp className="h-3 w-3" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDecrement(setRedThreshold, redThreshold)}
+                    className="flex-1 px-1 hover:bg-gray-100 rounded-sm transition-colors"
+                  >
+                    <ChevronDown className="h-3 w-3" />
+                  </button>
+                </div>
+              </div>
+              <span className="text-gray-600 antialiased">days or more</span>
+              <InfoCircle className="h-4 w-4 text-gray-400 cursor-help" />
+            </div>
+          </div>
 
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-green-400" />
+              <div className="w-3 h-3 rounded-full bg-yellow-500" />
+              <span className="font-semibold text-gray-700 antialiased">Yellow Priority Threshold</span>
+            </div>
+            <div className="flex items-center gap-2 ml-5">
+              <div className="relative">
+                <Input
+                  type="text"
+                  value={yellowThreshold}
+                  onChange={(e) => setYellowThreshold(e.target.value)}
+                  className="w-24 pr-8 text-center antialiased"
+                />
+                <div className="absolute right-1 top-1 bottom-1 flex flex-col">
+                  <button
+                    type="button"
+                    onClick={() => handleIncrement(setYellowThreshold, yellowThreshold)}
+                    className="flex-1 px-1 hover:bg-gray-100 rounded-sm transition-colors"
+                  >
+                    <ChevronUp className="h-3 w-3" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDecrement(setYellowThreshold, yellowThreshold)}
+                    className="flex-1 px-1 hover:bg-gray-100 rounded-sm transition-colors"
+                  >
+                    <ChevronDown className="h-3 w-3" />
+                  </button>
+                </div>
+              </div>
+              <span className="text-gray-600 antialiased">days or more</span>
+              <InfoCircle className="h-4 w-4 text-gray-400 cursor-help" />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-green-500" />
               <span className="font-semibold text-gray-700 antialiased">Green Priority</span>
             </div>
             <p className="text-gray-600 text-sm ml-5 antialiased">
@@ -100,54 +152,6 @@ export function PriorityRulesDialog({ open, onOpenChange }: PriorityRulesDialogP
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
-}
-
-interface PrioritySectionProps {
-  color: "red" | "yellow"
-  title: string
-  value: string
-  setValue: (value: string) => void
-  onIncrement: () => void
-  onDecrement: () => void
-}
-
-function PrioritySection({ color, title, value, setValue, onIncrement, onDecrement }: PrioritySectionProps) {
-  return (
-    <div className="space-y-2">
-      <div className="flex items-center gap-2">
-        <div className={`w-3 h-3 rounded-full bg-${color}-400`} />
-        <span className="font-semibold text-gray-700 antialiased">{title}</span>
-      </div>
-      <div className="flex items-center gap-2 ml-5">
-        <div className="relative">
-          <Input
-            type="text"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            className="w-24 pr-8 text-center antialiased"
-          />
-          <div className="absolute right-1 top-1 bottom-1 flex flex-col">
-            <button
-              type="button"
-              onClick={onIncrement}
-              className="flex-1 px-1 hover:bg-gray-100 rounded-sm transition-colors"
-            >
-              <ChevronUp className="h-3 w-3" />
-            </button>
-            <button
-              type="button"
-              onClick={onDecrement}
-              className="flex-1 px-1 hover:bg-gray-100 rounded-sm transition-colors"
-            >
-              <ChevronDown className="h-3 w-3" />
-            </button>
-          </div>
-        </div>
-        <span className="text-gray-600 antialiased">days or more</span>
-        <InfoCircle className="h-4 w-4 text-gray-400 cursor-help" />
-      </div>
-    </div>
   )
 }
 

@@ -8,15 +8,38 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Checkbox } from "@/components/ui/checkbox"
-import { FileText, Plus } from "lucide-react"
+import { FileText, Plus, AlertCircle } from "lucide-react"
 import Link from "next/link"
 import { CreateEstabDialog } from "@/components/create-estab-dialog"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 export default function MasterEstabList() {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedRows, setSelectedRows] = useState<string[]>([])
   const [showCreateDialog, setShowCreateDialog] = useState(false)
   const { positions } = useEstab()
+
+  // Find duplicate positions by counting occurrences of each title
+  const duplicatePositions = useMemo(() => {
+    const positionCounts = positions.reduce(
+      (acc, position) => {
+        const title = position.title.toLowerCase()
+        acc[title] = (acc[title] || 0) + 1
+        return acc
+      },
+      {} as Record<string, number>,
+    )
+
+    return Object.entries(positionCounts)
+      .filter(([_, count]) => count > 1)
+      .reduce(
+        (acc, [title]) => {
+          acc[title] = true
+          return acc
+        },
+        {} as Record<string, boolean>,
+      )
+  }, [positions])
 
   const filteredPositions = useMemo(() => {
     return positions.filter((position) =>
@@ -84,31 +107,48 @@ export default function MasterEstabList() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredPositions.map((position) => (
-                  <TableRow key={position.id}>
-                    <TableCell>
-                      <Checkbox
-                        checked={selectedRows.includes(position.id)}
-                        onCheckedChange={(checked) => handleSelectRow(position.id, checked as boolean)}
-                      />
-                    </TableCell>
-                    <TableCell>{position.title}</TableCell>
-                    <TableCell>{position.posnId}</TableCell>
-                    <TableCell>{position.rank}</TableCell>
-                    <TableCell>{position.creationDate}</TableCell>
-                    <TableCell>{position.personnel}</TableCell>
-                    <TableCell>{position.remarks}</TableCell>
-                    <TableCell>
-                      <div className="flex justify-center">
-                        <Link href={`/estab/details/${position.id}`}>
-                          <Button variant="ghost" size="icon" className="h-8 w-8">
-                            <FileText className="h-4 w-4" />
-                          </Button>
-                        </Link>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {filteredPositions.map((position) => {
+                  const isDuplicate = duplicatePositions[position.title.toLowerCase()]
+                  return (
+                    <TableRow key={position.id} className={isDuplicate ? "bg-red-50" : undefined}>
+                      <TableCell>
+                        <Checkbox
+                          checked={selectedRows.includes(position.id)}
+                          onCheckedChange={(checked) => handleSelectRow(position.id, checked as boolean)}
+                        />
+                      </TableCell>
+                      <TableCell className="flex items-center gap-2">
+                        {position.title}
+                        {isDuplicate && (
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger>
+                                <AlertCircle className="h-4 w-4 text-red-500" />
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>Duplicate position found in the list</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        )}
+                      </TableCell>
+                      <TableCell>{position.posnId}</TableCell>
+                      <TableCell>{position.rank}</TableCell>
+                      <TableCell>{position.creationDate}</TableCell>
+                      <TableCell>{position.personnel}</TableCell>
+                      <TableCell>{position.remarks}</TableCell>
+                      <TableCell>
+                        <div className="flex justify-center">
+                          <Link href={`/estab/details/${position.id}`}>
+                            <Button variant="ghost" size="icon" className="h-8 w-8">
+                              <FileText className="h-4 w-4" />
+                            </Button>
+                          </Link>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  )
+                })}
               </TableBody>
             </Table>
           </div>
