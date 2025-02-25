@@ -1,29 +1,37 @@
 "use client"
 
+import { SelectItem } from "@/components/ui/select"
+
+import { SelectContent } from "@/components/ui/select"
+
+import { SelectValue } from "@/components/ui/select"
+
+import { SelectTrigger } from "@/components/ui/select"
+
+import { Select } from "@/components/ui/select"
+
 import { useState, useMemo } from "react"
 import { CollapsibleSidebar } from "@/components/layout/collapsible-sidebar"
 import { Header } from "@/components/header"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Checkbox } from "@/components/ui/checkbox"
 import { FileText, Pencil, ChevronLeft, ChevronRight, ChevronUp, ChevronDown } from "lucide-react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useImportedData } from "@/contexts/ImportedDataContext"
 import { EmptyStateUpload } from "@/components/empty-state-upload"
 
-type SortField = "ID" | "Name" | "Position" | "Unit" | "Rank" | "POSN ID" | "Creation Date"
-
 export default function TablePage() {
   const { importedData } = useImportedData()
-
+  const router = useRouter()
   const [searchQuery, setSearchQuery] = useState("")
-  const [sortField, setSortField] = useState<SortField>("ID")
+  const [sortField, setSortField] = useState<string>("ID")
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc")
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedRows, setSelectedRows] = useState<number[]>([])
-  const [columnOrder, setColumnOrder] = useState<SortField[]>([
+  const [columnOrder, setColumnOrder] = useState<string[]>([
     "ID",
     "Name",
     "Position",
@@ -94,12 +102,16 @@ export default function TablePage() {
     }
   }
 
-  const handleColumnSelect = (field: SortField) => {
+  const handleColumnSelect = (field: string) => {
     setSortField(field)
     if (field !== "ID") {
       const newOrder = ["ID", field, ...columnOrder.filter((col) => col !== "ID" && col !== field)]
       setColumnOrder(newOrder)
     }
+  }
+
+  const handleEditEstab = (id: number) => {
+    router.push(`/estab/master-list/${id}`)
   }
 
   if (!importedData?.positions || importedData.positions.length === 0) {
@@ -140,7 +152,8 @@ export default function TablePage() {
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
                 <span className="text-sm">Sort</span>
-                <Select value={sortField} onValueChange={(value: SortField) => handleColumnSelect(value)}>
+                {/* <Select value={sortField} onValueChange={(value: SortField) => handleColumnSelect(value)}> */}
+                <Select value={sortField} onValueChange={(value: string) => handleColumnSelect(value)}>
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Select field" />
                   </SelectTrigger>
@@ -203,13 +216,13 @@ export default function TablePage() {
                       </TableCell>
                     ))}
                     <TableCell>
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 justify-center">
                         <Link href={`/organization/estab/${row.ID}`}>
                           <Button variant="ghost" size="icon" className="h-8 w-8">
                             <FileText className="h-4 w-4" />
                           </Button>
                         </Link>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleEditEstab(row.ID)}>
                           <Pencil className="h-4 w-4" />
                         </Button>
                       </div>
